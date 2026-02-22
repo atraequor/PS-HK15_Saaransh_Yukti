@@ -1,0 +1,262 @@
+@import url('project.css');
+
+/* What-If Simulator Dashboard Refresh */
+
+body {
+    display: flex;
+    flex-direction: column;
+    scroll-snap-type: none;
+    overflow-y: auto;
+    background: var(--off);
+    font-family: var(--font-u);
+    color: var(--ink-mid);
+}
+
+input,
+select,
+textarea,
+button {
+    font-family: var(--font-u);
+}
+
+#page-body {
+    height: auto;
+    overflow-y: visible;
+    scroll-snap-align: none;
+}
+
+.simulator-container {
+    padding-top: 100px;
+    padding-bottom: 80px;
+}
+
+.simulator-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 48px;
+    align-items: start;
+}
+
+/* SIDEBAR: Configuration Panel */
+.config-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+/* MAIN: Results Engine */
+.results-engine {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+}
+
+/* Card Refinements */
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+}
+
+.card h3 {
+    font-family: var(--font-u);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--stone);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h3::before {
+    content: '';
+    width: 12px;
+    height: 1px;
+    background: var(--green);
+}
+
+/* Outcome Hero Card */
+.outcomes-hero {
+    background: var(--stone);
+    border: 1px solid var(--green);
+}
+
+.outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.kpi {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.kpi:hover {
+    transform: translateY(-4px);
+    border-color: var(--green);
+}
+
+.kpi strong {
+    font-family: var(--font-d);
+    font-size: 32px;
+    color: var(--green);
+    display: block;
+}
+
+.kpi span {
+    font-size: 11px;
+    color: var(--ink-low);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Secondary Grids */
+.secondary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+/* Inputs & Labels */
+label {
+    font-family: var(--font-u);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-low);
+    margin: 12px 0 6px;
+    display: block;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--off);
+    font-size: 13px;
+    color: var(--ink);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    background: var(--white);
+}
+
+/* Action Area */
+.action-area {
+    position: sticky;
+    bottom: 32px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    z-index: 10;
+}
+
+button {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--white);
+    font-family: var(--font-u);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.18s;
+}
+
+button:hover {
+    background: var(--green);
+    transform: translateY(-2px);
+}
+
+#run {
+    background: var(--green);
+    color: var(--white);
+}
+
+#reset {
+    background: var(--stone);
+    color: var(--ink-mid);
+}
+
+.result-good {
+    color: var(--green);
+}
+
+.result-warn {
+    color: var(--amber);
+}
+
+/* Insights List */
+#notes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#notes li {
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--off);
+    margin-bottom: 10px;
+    font-size: 13px;
+    border-left: 3px solid var(--green);
+}
+
+#notes li.result-warn {
+    border-left-color: var(--amber);
+}
+
+@media (max-width: 1100px) {
+    .simulator-layout {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .outcomes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .secondary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card .outcomes-grid[style*="repeat(3"] {
+        grid-template-columns: 1fr !important;
+    }
+}

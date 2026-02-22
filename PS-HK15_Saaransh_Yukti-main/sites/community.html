@@ -1,0 +1,1367 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Yukti Community</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/community.css" />
+    <link rel="stylesheet" href="../css/translate.css" />
+    <style>
+        :root {
+            --snow: #fbfaf8;
+            --cloud: #f4f1ed;
+            --stone: #ece7e1;
+            --ink: #121211;
+            --ink-soft: #6b6a66;
+            --green: #2f5f35;
+            --green-soft: rgba(47, 95, 53, 0.12);
+            --card: #ffffff;
+            --border: rgba(18, 18, 17, 0.08);
+            --shadow: 0 16px 40px rgba(18, 18, 17, 0.06);
+            --radius: 26px;
+        }
+
+        body.community-v2 {
+            background: var(--cloud);
+            font-family: 'Outfit', sans-serif;
+            color: var(--ink);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .community-shell {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            gap: 28px;
+            padding: 28px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1100px) {
+            .community-shell {
+                grid-template-columns: 240px minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 860px) {
+            .community-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .left-pane {
+                order: 2;
+            }
+        }
+
+        .left-card,
+        .right-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .left-card {
+            padding: 22px;
+            position: sticky;
+            top: 22px;
+        }
+
+        .back-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--snow);
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .profile-bubble {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .profile-bubble .p-avatar {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 12px;
+            font-size: 32px;
+            font-weight: 600;
+            border-radius: 50%;
+            background: var(--green);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-bubble .p-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .profile-bubble .p-bio {
+            font-size: 13px;
+            color: var(--ink-soft);
+            margin: 6px 0 0;
+        }
+
+        .mini-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0 18px;
+            text-align: center;
+        }
+
+        .mini-stats span {
+            display: block;
+        }
+
+        .mini-stats .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .mini-stats .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--ink-soft);
+        }
+
+        .left-nav {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+            background: transparent;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            color: var(--ink);
+        }
+
+        .nav-btn.active {
+            background: var(--green-soft);
+            border-color: rgba(47, 95, 53, 0.18);
+            color: var(--green);
+        }
+
+        .left-section {
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+
+        .profile-details {
+            display: grid;
+            gap: 12px;
+        }
+
+        .profile-details .detail-pill {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: var(--snow);
+            border: 1px solid var(--border);
+        }
+
+        .profile-posts {
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+            max-height: 280px;
+            overflow: auto;
+        }
+
+        .profile-post-card {
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .profile-post-card strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .profile-post-card .meta {
+            font-size: 11px;
+            color: var(--ink-soft);
+            margin-top: 4px;
+        }
+
+        .profile-post-card .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .profile-post-card button {
+            font-size: 11px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--snow);
+            padding: 4px 10px;
+            cursor: pointer;
+        }
+
+        .left-frame {
+            width: 100%;
+            border: none;
+            min-height: 420px;
+            border-radius: 18px;
+            background: #fff;
+        }
+
+        .center-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .top-bar h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--ink-soft);
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn.active {
+            background: var(--green-soft);
+            border-color: rgba(47, 95, 53, 0.22);
+            color: var(--green);
+        }
+
+        .live-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(47, 95, 53, 0.2);
+            color: var(--green);
+            background: rgba(47, 95, 53, 0.08);
+            margin-right: 6px;
+        }
+
+        .settings-menu {
+            position: absolute;
+            right: 0;
+            top: 44px;
+            background: #fff;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            border-radius: 16px;
+            min-width: 200px;
+            padding: 10px;
+            display: none;
+            z-index: 20;
+        }
+
+        .settings-menu.active {
+            display: grid;
+            gap: 6px;
+        }
+
+        .settings-menu button {
+            border: none;
+            background: transparent;
+            text-align: left;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            color: var(--ink);
+        }
+
+        .settings-menu button:hover {
+            background: var(--green-soft);
+        }
+
+        .search-inline {
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        .composer {
+            background: #fff;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .composer textarea {
+            border: none;
+            resize: none;
+            width: 100%;
+            font-size: 15px;
+            min-height: 90px;
+            outline: none;
+        }
+
+        .composer-tools {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+        }
+
+        .pill-select {
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--snow);
+            padding: 6px 14px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-post {
+            background: var(--ink);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 10px 22px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .post-card {
+            background: #fff;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .post-u-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .u-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--stone);
+            font-weight: 600;
+        }
+
+        .u-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .u-meta {
+            font-size: 12px;
+            color: var(--ink-soft);
+        }
+
+        .follow-btn {
+            font-size: 11px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--snow);
+            padding: 4px 10px;
+            cursor: pointer;
+        }
+
+        .follow-btn.active {
+            background: var(--green-soft);
+            color: var(--green);
+            border-color: rgba(47, 95, 53, 0.2);
+        }
+
+        .category-tag {
+            background: var(--green-soft);
+            color: var(--green);
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 18px;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        .action-btn {
+            border: none;
+            background: none;
+            color: var(--ink-soft);
+            font-size: 13px;
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .action-btn.active {
+            color: var(--green);
+        }
+
+        .feed-view {
+            display: grid;
+            gap: 18px;
+        }
+
+        .dm-view {
+            background: #fff;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .dm-layout {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            gap: 16px;
+        }
+
+        .dm-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-soft);
+            margin: 6px 0 8px;
+        }
+
+        .dm-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .dm-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 10px;
+            background: var(--snow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .dm-card .meta {
+            font-size: 11px;
+            color: var(--ink-soft);
+            margin-top: 2px;
+        }
+
+        .dm-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .dm-card button {
+            border: 1px solid var(--border);
+            background: #fff;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .dm-thread {
+            border-left: 1px solid var(--border);
+            padding-left: 16px;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: 420px;
+        }
+
+        .dm-thread-header {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .dm-messages {
+            display: grid;
+            gap: 8px;
+            overflow: auto;
+            padding-right: 6px;
+        }
+
+        .dm-bubble {
+            max-width: 82%;
+            padding: 8px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--snow);
+            font-size: 12px;
+        }
+
+        .dm-bubble.me {
+            margin-left: auto;
+            background: var(--green-soft);
+            border-color: rgba(47, 95, 53, 0.2);
+        }
+
+        .dm-input-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .dm-input-row input {
+            flex: 1;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+
+        .dm-input-row button {
+            border: none;
+            border-radius: 10px;
+            background: var(--green);
+            color: #fff;
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .dm-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dm-thread {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid var(--border);
+                padding-top: 16px;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--ink-soft);
+            padding: 18px;
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body class="community-v2">
+
+    <div class="community-shell">
+        <aside class="left-pane">
+            <div class="left-card">
+                <a class="back-arrow" id="backToProject" href="project.html" aria-label="Back to Project">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </a>
+
+                <div class="profile-bubble">
+                    <div class="p-avatar" id="myAvatar">P</div>
+                    <h2 class="p-name" id="myName">Farmer</h2>
+                    <p class="p-bio" id="myBio">Loading profile...</p>
+                </div>
+
+                <div class="mini-stats">
+                    <div>
+                        <span class="stat-value" id="followersCount">0</span>
+                        <span class="stat-label">Followers</span>
+                    </div>
+                    <div>
+                        <span class="stat-value" id="followingCount">0</span>
+                        <span class="stat-label">Following</span>
+                    </div>
+                </div>
+
+                <div class="left-nav">
+                    <button class="nav-btn active" id="navProfile">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        Profile
+                    </button>
+                    <button class="nav-btn" id="navMandi">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 3h18v18H3z" />
+                            <path d="M7 7h10M7 12h10M7 17h6" />
+                        </svg>
+                        Mandi Prices
+                    </button>
+                </div>
+
+                <div class="left-section" id="profilePanel">
+                    <div class="profile-details">
+                        <div class="detail-pill">
+                            <span>Posts Published</span>
+                            <strong id="postsCount">0</strong>
+                        </div>
+                        <div class="detail-pill">
+                            <span>Likes Earned</span>
+                            <strong id="seedsEarned">0</strong>
+                        </div>
+                        <div class="detail-pill">
+                            <span>Community Reach</span>
+                            <strong id="reachScore">0</strong>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:14px; font-size:13px; font-weight:600;">My Posts</div>
+                    <div class="profile-posts" id="profilePosts">
+                        <div class="profile-post-card">No posts yet.</div>
+                    </div>
+                </div>
+
+                <div class="left-section" id="mandiPanel" style="display:none;">
+                    <iframe class="left-frame" id="mandiFrame" src="mandi_price.html" title="Mandi Prices"></iframe>
+                </div>
+            </div>
+        </aside>
+
+        <main class="center-pane">
+            <div class="top-bar">
+                <h1>Your Yukti Community</h1>
+                <div class="top-actions">
+                    <span class="live-badge">Live</span>
+                    <button class="icon-btn" id="dmToggle" title="Direct Messages" aria-label="Direct Messages">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="feedPersonal" title="Follower Feed" aria-label="Follower Feed">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="feedGlobal" title="Global Feed" aria-label="Global Feed">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M2 12h20" />
+                            <path d="M12 2a15 15 0 0 1 0 20" />
+                            <path d="M12 2a15 15 0 0 0 0 20" />
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="settingsToggle" title="Settings" aria-label="Settings">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="4" y1="21" x2="4" y2="14" />
+                            <line x1="4" y1="10" x2="4" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12" y2="3" />
+                            <line x1="20" y1="21" x2="20" y2="16" />
+                            <line x1="20" y1="12" x2="20" y2="3" />
+                            <line x1="1" y1="14" x2="7" y2="14" />
+                            <line x1="9" y1="8" x2="15" y2="8" />
+                            <line x1="17" y1="16" x2="23" y2="16" />
+                        </svg>
+                    </button>
+                    <div class="settings-menu" id="settingsMenu">
+                        <button type="button">Account Settings</button>
+                        <button type="button">Privacy & Visibility</button>
+                        <button type="button">Notification Controls</button>
+                        <button type="button">Saved Posts</button>
+                        <button type="button">Blocked Users</button>
+                        <button type="button">Report a Problem</button>
+                        <button type="button" id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feed-view" id="feedView">
+                <input id="feedSearch" class="search-inline" type="text" width="50"
+                    placeholder="Search posts, comments, or farmers ...">
+
+                <div class="composer">
+                    <textarea id="postContent"
+                        placeholder="What's happening in your fields? Share a victory, ask for advice, or celebrate."></textarea>
+                    <div class="composer-tools">
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <select id="postCategory" class="pill-select">
+                                <option value="general">General</option>
+                                <option value="rumors">Market Rumor</option>
+                                <option value="crisis">Crisis Help</option>
+                                <option value="success">Success</option>
+                            </select>
+                            <button id="mediaBtn" class="pill-select"
+                                style="display:flex; align-items:center; gap:6px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>
+                                Upload Media
+                            </button>
+                            <input type="file" id="mediaInput" accept="image/*,video/*" multiple style="display:none;">
+                        </div>
+                        <button id="publishPost" class="btn-post">Publish Post</button>
+                    </div>
+                    <div id="mediaPreview" style="display:none; margin-top:12px; position:relative;">
+                        <div id="previewGrid"
+                            style="display:grid; grid-template-columns:repeat(auto-fill,minmax(72px,1fr)); gap:8px;">
+                        </div>
+                        <button id="clearMedia"
+                            style="position:absolute; top:-8px; right:-8px; background:var(--ink); color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-size:12px;">×</button>
+                    </div>
+                </div>
+
+                <div id="communityFeed">
+                    <div class="empty-state">The fields are quiet. Start the conversation.</div>
+                </div>
+            </div>
+
+            <div class="dm-view" id="dmView" style="display:none;">
+                <div class="dm-layout">
+                    <div>
+                        <div class="dm-section-title">Find Farmers</div>
+                        <input id="userSearch" class="search-inline" type="text"
+                            placeholder="Search farmers by name or email">
+                        <div class="dm-list" id="userResults"></div>
+
+                        <div class="dm-section-title">Requests</div>
+                        <div class="dm-list" id="followRequests"></div>
+
+                        <div class="dm-section-title">Recent Chats</div>
+                        <div class="dm-list" id="dmThreads"></div>
+                    </div>
+
+                    <div class="dm-thread">
+                        <div class="dm-thread-header" id="dmThreadHeader">Select a farmer to chat</div>
+                        <div class="dm-messages" id="dmMessages"></div>
+                        <div class="dm-input-row">
+                            <input id="dmInput" type="text" placeholder="Write a message..." disabled />
+                            <button id="dmSend" disabled>Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../servers/auth-guard.js"></script>
+    <script src="../servers/community.js"></script>
+    <script src="../scripts/translate.js"></script>
+    <script>
+    (function () {
+        const feedModeKey = 'fm_feed_mode_v1';
+        let followingIds = [];
+        let incomingRequests = [];
+        let outgoingRequests = [];
+        let currentDmUser = null;
+        let dmOpen = false;
+        let userSearchTimer = null;
+    
+        function $(id) {
+            return document.getElementById(id);
+        }
+    
+        function getUser() {
+            try {
+                return JSON.parse(localStorage.getItem('fm_user') || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+    
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+    
+        function formatTimeAgo(dateStr) {
+            if (!dateStr) return 'Just now';
+            const ts = new Date(dateStr).getTime();
+            const diff = Date.now() - ts;
+            if (Number.isNaN(diff)) return 'Just now';
+            const minutes = Math.floor(diff / 60000);
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours}h ago`;
+            const days = Math.floor(hours / 24);
+            if (days < 7) return `${days}d ago`;
+            return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+    
+        async function loadFollowStats() {
+        try {
+            const [followersRes, followingRes] = await Promise.all([
+                authFetch('/api/community/followers'),
+                authFetch('/api/community/following')
+            ]);
+            const followers = followersRes.ok ? await followersRes.json() : [];
+            const following = followingRes.ok ? await followingRes.json() : [];
+            followingIds = (following || []).map(f => Number(f.id));
+            if ($('followersCount')) $('followersCount').textContent = followers.length;
+            if ($('followingCount')) $('followingCount').textContent = following.length;
+            if ($('reachScore')) $('reachScore').textContent = Math.max(1, followers.length + following.length) * 12;
+            applyFeedSearch();
+        } catch (e) { }
+    }
+    
+        async function loadFollowRequests() {
+            try {
+                const res = await authFetch('/api/community/follow-requests');
+                if (!res.ok) return;
+                const data = await res.json();
+                incomingRequests = data.incoming || [];
+                outgoingRequests = data.outgoing || [];
+                renderFollowRequests();
+            } catch (e) { }
+        }
+    
+        function getFollowStatus(userId) {
+            const id = Number(userId);
+            if (followingIds.includes(id)) return { status: 'following' };
+            const incoming = incomingRequests.find(r => Number(r.user_id) === id);
+            if (incoming) return { status: 'incoming', requestId: incoming.id };
+            const outgoing = outgoingRequests.find(r => Number(r.user_id) === id);
+            if (outgoing) return { status: 'requested', requestId: outgoing.id };
+            return { status: 'none' };
+        }
+    
+        async function handleFollowAction(userId) {
+            const status = getFollowStatus(userId);
+            try {
+                if (status.status === 'following') {
+                    await authFetch(`/api/community/follow/${userId}`, { method: 'DELETE' });
+                } else if (status.status === 'requested' && status.requestId) {
+                    await authFetch(`/api/community/follow-requests/${status.requestId}`, { method: 'DELETE' });
+                } else if (status.status === 'incoming' && status.requestId) {
+                    await authFetch(`/api/community/follow-requests/${status.requestId}/accept`, { method: 'POST' });
+                } else {
+                    await authFetch('/api/community/follow-requests', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ target_user_id: userId })
+                    });
+                }
+                await loadFollowStats();
+                await loadFollowRequests();
+                applyFeedSearch();
+            } catch (e) { }
+        }
+    
+        async function acceptRequest(requestId) {
+            await authFetch(`/api/community/follow-requests/${requestId}/accept`, { method: 'POST' });
+            await loadFollowStats();
+            await loadFollowRequests();
+            applyFeedSearch();
+        }
+    
+        async function rejectRequest(requestId) {
+            await authFetch(`/api/community/follow-requests/${requestId}/reject`, { method: 'POST' });
+            await loadFollowRequests();
+        }
+    
+        async function cancelRequest(requestId) {
+            await authFetch(`/api/community/follow-requests/${requestId}`, { method: 'DELETE' });
+            await loadFollowRequests();
+        }
+    
+        function renderFollowRequests() {
+            const container = $('followRequests');
+            if (!container) return;
+            if (!incomingRequests.length && !outgoingRequests.length) {
+                container.innerHTML = '<div class="dm-card">No pending requests.</div>';
+                return;
+            }
+            const incomingHtml = incomingRequests.map(r => `
+                <div class="dm-card">
+                    <div>
+                        <strong>${escapeHtml(r.full_name)}</strong>
+                        <div class="meta">${escapeHtml(r.primary_crop || 'Farmer')} · ${escapeHtml(r.district || 'India')}</div>
+                    </div>
+                    <div class="dm-actions">
+                        <button type="button" onclick="acceptFollowRequest(${r.id})">Accept</button>
+                        <button type="button" onclick="rejectFollowRequest(${r.id})">Decline</button>
+                    </div>
+                </div>
+            `).join('');
+            const outgoingHtml = outgoingRequests.map(r => `
+                <div class="dm-card">
+                    <div>
+                        <strong>${escapeHtml(r.full_name)}</strong>
+                        <div class="meta">Requested · ${escapeHtml(r.primary_crop || 'Farmer')}</div>
+                    </div>
+                    <div class="dm-actions">
+                        <button type="button" onclick="cancelFollowRequest(${r.id})">Cancel</button>
+                    </div>
+                </div>
+            `).join('');
+            container.innerHTML = `${incomingHtml}${outgoingHtml}`;
+        }
+    
+        async function searchUsers() {
+            const input = $('userSearch');
+            const list = $('userResults');
+            const query = (input?.value || '').trim();
+            if (!list) return;
+            if (query.length < 2) {
+                list.innerHTML = '<div class="dm-card">Type at least 2 letters.</div>';
+                return;
+            }
+            try {
+                const res = await authFetch(`/api/community/users?q=${encodeURIComponent(query)}`);
+                const users = res.ok ? await res.json() : [];
+                if (!users.length) {
+                    list.innerHTML = '<div class="dm-card">No farmers found.</div>';
+                    return;
+                }
+            list.innerHTML = users.map(u => {
+                const status = getFollowStatus(u.id);
+                let label = 'Follow';
+                if (status.status === 'following') label = 'Following';
+                if (status.status === 'requested') label = 'Requested';
+                if (status.status === 'incoming') label = 'Accept';
+                const encodedName = encodeURIComponent(u.full_name || 'Farmer');
+                return `
+                    <div class="dm-card">
+                        <div>
+                            <strong>${escapeHtml(u.full_name || 'Farmer')}</strong>
+                            <div class="meta">${escapeHtml(u.primary_crop || 'Farmer')} · ${escapeHtml(u.district || 'India')}</div>
+                        </div>
+                        <div class="dm-actions">
+                            <button type="button" onclick="handleFollowAction(${u.id})">${label}</button>
+                            <button type="button" onclick="openDmWithUser(${u.id}, '${encodedName}')">Message</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            } catch (e) {
+                list.innerHTML = '<div class="dm-card">Search failed.</div>';
+            }
+        }
+    
+        async function loadDmThreads() {
+            const container = $('dmThreads');
+            if (!container) return;
+            try {
+                const res = await authFetch('/api/community/dms');
+                const threads = res.ok ? await res.json() : [];
+                if (!threads.length) {
+                    container.innerHTML = '<div class="dm-card">No messages yet.</div>';
+                    return;
+                }
+            container.innerHTML = threads.map(t => {
+                const encodedName = encodeURIComponent(t.full_name || 'Farmer');
+                return `
+                    <div class="dm-card" onclick="openDmWithUser(${t.other_id}, '${encodedName}')">
+                        <div>
+                            <strong>${escapeHtml(t.full_name || 'Farmer')}</strong>
+                            <div class="meta">${escapeHtml(t.last_message || 'Start the conversation')}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            } catch (e) {
+                container.innerHTML = '<div class="dm-card">Unable to load chats.</div>';
+            }
+        }
+    
+        async function loadDmConversation(userId) {
+            const list = $('dmMessages');
+            if (!list) return;
+            try {
+                const res = await authFetch(`/api/community/dms/${userId}`);
+                const messages = res.ok ? await res.json() : [];
+                if (!messages.length) {
+                    list.innerHTML = '<div class="dm-card">No messages yet.</div>';
+                    return;
+                }
+                const me = getUser();
+                list.innerHTML = messages.map(m => `
+                    <div class="dm-bubble ${Number(m.sender_id) === Number(me.id) ? 'me' : ''}">
+                        ${escapeHtml(m.content)}
+                    </div>
+                `).join('');
+                list.scrollTop = list.scrollHeight;
+            } catch (e) {
+                list.innerHTML = '<div class="dm-card">Unable to load messages.</div>';
+            }
+        }
+    
+        async function sendDm() {
+            const input = $('dmInput');
+            if (!input || !currentDmUser) return;
+            const content = input.value.trim();
+            if (!content) return;
+            input.value = '';
+            try {
+                await authFetch('/api/community/dms', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ to_user_id: currentDmUser.id, content })
+                });
+                await loadDmConversation(currentDmUser.id);
+                await loadDmThreads();
+            } catch (e) { }
+        }
+    
+        function openDmWithUser(id, name) {
+            const decodedName = name ? decodeURIComponent(name) : 'Farmer';
+            currentDmUser = { id: Number(id), name: decodedName };
+            const header = $('dmThreadHeader');
+            if (header) header.textContent = `Chat with ${currentDmUser.name}`;
+            const input = $('dmInput');
+            const send = $('dmSend');
+            if (input) input.disabled = false;
+            if (send) send.disabled = false;
+            loadDmConversation(currentDmUser.id);
+        }
+    
+        function toggleDmView(open) {
+            dmOpen = open;
+            const dmView = $('dmView');
+            const feedView = $('feedView');
+            const dmToggle = $('dmToggle');
+            if (dmView) dmView.style.display = open ? 'block' : 'none';
+            if (feedView) feedView.style.display = open ? 'none' : 'grid';
+            if (dmToggle) dmToggle.classList.toggle('active', open);
+            if (open) {
+                loadDmThreads();
+                loadFollowRequests();
+            }
+        }
+    
+        function setFeedMode(mode) {
+            localStorage.setItem(feedModeKey, mode);
+            const personal = $('feedPersonal');
+            const global = $('feedGlobal');
+            if (personal && global) {
+                personal.classList.toggle('active', mode === 'personal');
+                global.classList.toggle('active', mode === 'global');
+            }
+            applyFeedSearch();
+        }
+    
+        window.renderPost = function (post) {
+            const user = getUser();
+            const isOwner = user.id === post.user_id;
+            const initials = (post.full_name || 'F').split(' ').map(n => n[0]).join('').slice(0, 2);
+            const author = post.full_name || 'Farmer';
+            const time = formatTimeAgo(post.created_at);
+            const hasLiked = post.has_liked ? 'active' : '';
+            const mediaItems = window.normalizeMedia ? normalizeMedia(post) : [];
+            const status = getFollowStatus(post.user_id);
+            let followLabel = 'Follow';
+            if (status.status === 'following') followLabel = 'Following';
+            if (status.status === 'requested') followLabel = 'Requested';
+            if (status.status === 'incoming') followLabel = 'Accept';
+            const followBtn = (!isOwner)
+                ? `<button class="follow-btn ${status.status === 'following' ? 'active' : ''}" onclick="handleFollowAction(${post.user_id})">${followLabel}</button>`
+                : '';
+            const deleteBtn = isOwner ? `
+                <button class="delete-trigger" onclick="openEditPost(${post.id})" title="Edit post" style="opacity:1; margin-right:6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                </button>
+                <button class="delete-trigger" onclick="deletePost(${post.id})" title="Delete post" style="opacity:1;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+            ` : '';
+    
+            const mediaHtml = mediaItems.length ? `
+                <div class="post-media-grid">
+                    ${mediaItems.map(src => src.startsWith('data:video/')
+                    ? `<video src="${src}" controls preload="metadata"></video>`
+                    : `<img src="${src}" class="post-img" loading="lazy">`).join('')}
+                </div>` : '';
+    
+            return `
+                <div class="post-card" id="post-${post.id}">
+                    <div class="post-u-row">
+                        <div class="u-avatar">${initials}</div>
+                        <div class="u-info">
+                            <div class="u-name">${escapeHtml(author)} ${followBtn} ${deleteBtn} <span class="u-meta">· ${time}</span></div>
+                            <div class="u-meta">${escapeHtml(post.district || 'India')}</div>
+                        </div>
+                        <div class="category-tag">${escapeHtml((post.category || 'general').toUpperCase())}</div>
+                    </div>
+                    ${window.renderExpandableText ? renderExpandableText(post.content, 'post-body', post.id, 240) : `<div class="post-body">${escapeHtml(post.content || '')}</div>`}
+                    ${mediaHtml}
+                    <div class="post-actions">
+                        <button class="action-btn ${hasLiked}" onclick="likePost(${post.id})">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            Like (${post.like_count})
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(${post.id})">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                            Comments (${post.comment_count})
+                        </button>
+                    </div>
+                    <div id="comments-${post.id}" class="comments-section" style="display:none;">
+                        <div id="comment-list-${post.id}"></div>
+                        <div class="c-input-wrap">
+                            <input type="text" class="c-input" id="input-${post.id}" placeholder="Add a comment...">
+                            <button class="action-btn" onclick="postComment(${post.id})">Post</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+    
+        window.applyFeedSearch = function () {
+            const q = ($('feedSearch')?.value || '').trim().toLowerCase();
+            const feed = $('communityFeed');
+            const posts = Array.isArray(typeof allPosts !== 'undefined' ? allPosts : null) ? allPosts : [];
+            if (!feed) return;
+    
+            const mode = localStorage.getItem(feedModeKey) || 'global';
+            const user = getUser();
+    
+            let filtered = posts;
+            if (mode === 'personal') {
+                filtered = posts.filter(p => Number(p.user_id) === Number(user.id) || followingIds.includes(Number(p.user_id)));
+            }
+    
+            if (q) {
+                filtered = filtered.filter(p => {
+                    const hay = [p.content || '', p.full_name || '', p.primary_crop || '', p.district || '', p.category || ''].join(' ').toLowerCase();
+                    return hay.includes(q);
+                });
+            }
+    
+            if (!filtered.length) {
+                feed.innerHTML = `<div class="empty-state">${mode === 'personal' ? 'No posts from followers yet.' : 'The fields are quiet. Start the conversation.'}</div>`;
+                renderProfilePosts();
+                return;
+            }
+    
+            feed.innerHTML = filtered.map(window.renderPost).join('');
+            renderProfilePosts();
+        };
+    
+        function renderProfilePosts() {
+            const list = $('profilePosts');
+            if (!list) return;
+            const user = getUser();
+            const posts = Array.isArray(typeof allPosts !== 'undefined' ? allPosts : null) ? allPosts : [];
+            const mine = posts.filter(p => Number(p.user_id) === Number(user.id));
+            if (!mine.length) {
+                list.innerHTML = '<div class="profile-post-card">No posts yet.</div>';
+                return;
+            }
+            list.innerHTML = mine.map(p => `
+                <div class="profile-post-card">
+                    <strong>${escapeHtml((p.content || '').slice(0, 48))}${(p.content || '').length > 48 ? '...' : ''}</strong>
+                    <div class="meta">${formatTimeAgo(p.created_at)} · ${escapeHtml((p.category || 'general').toUpperCase())}</div>
+                    <div class="actions">
+                        <button onclick="openEditPost(${p.id})">Edit</button>
+                        <button onclick="deletePost(${p.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileBtn = $('navProfile');
+            const mandiBtn = $('navMandi');
+            const profilePanel = $('profilePanel');
+            const mandiPanel = $('mandiPanel');
+            const settingsToggle = $('settingsToggle');
+            const settingsMenu = $('settingsMenu');
+            const personalBtn = $('feedPersonal');
+            const globalBtn = $('feedGlobal');
+            const dmToggle = $('dmToggle');
+            const userSearch = $('userSearch');
+            const dmSend = $('dmSend');
+            const dmInput = $('dmInput');
+    
+            loadFollowStats();
+            loadFollowRequests();
+            loadDmThreads();
+    
+            if (profileBtn && mandiBtn && profilePanel && mandiPanel) {
+                profileBtn.addEventListener('click', () => {
+                    profileBtn.classList.add('active');
+                    mandiBtn.classList.remove('active');
+                    profilePanel.style.display = 'block';
+                    mandiPanel.style.display = 'none';
+                });
+                mandiBtn.addEventListener('click', () => {
+                    mandiBtn.classList.add('active');
+                    profileBtn.classList.remove('active');
+                    mandiPanel.style.display = 'block';
+                    profilePanel.style.display = 'none';
+                });
+            }
+    
+            if (settingsToggle && settingsMenu) {
+                settingsToggle.addEventListener('click', () => {
+                    settingsMenu.classList.toggle('active');
+                    settingsToggle.classList.toggle('active', settingsMenu.classList.contains('active'));
+                });
+            }
+    
+            if (personalBtn) {
+                personalBtn.addEventListener('click', () => setFeedMode('personal'));
+            }
+    
+            if (globalBtn) {
+                globalBtn.addEventListener('click', () => setFeedMode('global'));
+            }
+    
+            if (dmToggle) {
+                dmToggle.addEventListener('click', () => toggleDmView(!dmOpen));
+            }
+    
+            if (userSearch) {
+                userSearch.addEventListener('input', () => {
+                    clearTimeout(userSearchTimer);
+                    userSearchTimer = setTimeout(searchUsers, 300);
+                });
+            }
+    
+            if (dmSend) {
+                dmSend.addEventListener('click', sendDm);
+            }
+    
+            if (dmInput) {
+                dmInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendDm();
+                    }
+                });
+            }
+    
+            document.addEventListener('click', (e) => {
+                const target = e.target;
+                if (settingsMenu && settingsToggle && !settingsMenu.contains(target) && !settingsToggle.contains(target)) {
+                    settingsMenu.classList.remove('active');
+                    settingsToggle.classList.remove('active');
+                }
+            });
+    
+            const logoutBtn = $('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('fm_token');
+                    window.location.href = 'login.html';
+                });
+            }
+    
+            const backToProject = $('backToProject');
+            if (backToProject) {
+                backToProject.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        const res = await fetch('project.htm', { method: 'HEAD' });
+                        if (res.ok) {
+                            window.location.href = 'project.htm';
+                            return;
+                        }
+                    } catch (err) { }
+                    window.location.href = 'project.html';
+                });
+            }
+    
+            const savedMode = localStorage.getItem(feedModeKey) || 'global';
+            setFeedMode(savedMode);
+    
+            setInterval(() => {
+                loadFollowStats();
+                if (dmOpen) {
+                    loadDmThreads();
+                    if (currentDmUser) loadDmConversation(currentDmUser.id);
+                }
+            }, 6000);
+        });
+    
+        window.handleFollowAction = handleFollowAction;
+        window.acceptFollowRequest = acceptRequest;
+        window.rejectFollowRequest = rejectRequest;
+        window.cancelFollowRequest = cancelRequest;
+        window.openDmWithUser = openDmWithUser;
+    })();
+    </script>
+</body>
+
+</html>

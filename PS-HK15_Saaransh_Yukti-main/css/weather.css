@@ -1,0 +1,354 @@
+﻿@import url('project.css');
+
+html {
+    height: auto;
+    overflow: auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: none;
+    background: var(--off);
+    color: var(--ink);
+}
+
+#page-body {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    scroll-snap-align: none;
+}
+
+.weather-container {
+    padding-top: 98px;
+    padding-bottom: 80px;
+}
+
+.weather-header {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 48px 28px;
+}
+
+.weather-header h1 {
+    font-family: var(--font-d);
+    font-size: clamp(34px, 4vw, 54px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--ink);
+}
+
+.weather-header p {
+    margin-top: 10px;
+    max-width: 640px;
+    font-size: 14px;
+    color: var(--ink-low);
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+.wrap {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 24px;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 48px;
+    align-items: start;
+}
+
+.panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+}
+
+.title {
+    font-family: var(--font-d);
+    font-size: 29px;
+    font-weight: 400;
+    margin: 0 0 12px;
+    line-height: 1;
+}
+
+.muted {
+    font-size: 13px;
+    color: var(--ink-low);
+    line-height: 1.6;
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+input,
+button {
+    font-family: var(--font-u);
+    font-size: 14px;
+}
+
+input {
+    border: 1px solid var(--border);
+    background: var(--off);
+    border-radius: 10px;
+    padding: 11px 12px;
+    color: var(--ink);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--green);
+    background: var(--white);
+}
+
+button {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--white);
+    padding: 11px 14px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background: var(--green);
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.status {
+    margin-top: 14px;
+    display: grid;
+    gap: 10px;
+}
+
+.loading,
+.error,
+.debug {
+    display: none;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.loading {
+    background: rgba(46, 92, 52, 0.08);
+    color: var(--green);
+}
+
+.error {
+    background: rgba(158, 30, 30, 0.08);
+    color: #9a2525;
+    border-color: rgba(158, 30, 30, 0.25);
+}
+
+.debug {
+    background: var(--off);
+    color: var(--ink-mid);
+    max-height: 140px;
+    overflow-y: auto;
+    white-space: pre-line;
+}
+
+.weather-section {
+    margin-bottom: 16px;
+}
+
+.section-title {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 0 0 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-low);
+    font-weight: 500;
+}
+
+.section-hint {
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-low);
+}
+
+.current-weather {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    background: var(--off);
+}
+
+.location {
+    font-size: 12px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+}
+
+.current-overview {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-top: 8px;
+}
+
+.temp {
+    font-family: var(--font-d);
+    font-size: 72px;
+    line-height: 0.88;
+    color: var(--ink);
+}
+
+.condition {
+    font-size: 13px;
+    color: var(--ink-mid);
+    margin-top: 7px;
+}
+
+.current-details {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.detail-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--white);
+    padding: 11px;
+}
+
+.detail-label {
+    display: block;
+    font-size: 10px;
+    color: var(--ink-low);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-size: 15px;
+    color: var(--ink);
+}
+
+.coordinates {
+    margin-top: 14px;
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--ink-low);
+    font-size: 11px;
+}
+
+.hourly-scroll {
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.forecast-grid {
+    display: flex;
+    gap: 10px;
+    min-width: max-content;
+}
+
+.forecast-item {
+    min-width: 108px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    text-align: center;
+}
+
+.forecast-time {
+    font-size: 11px;
+    color: var(--ink-low);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.forecast-temp {
+    font-size: 18px;
+    font-family: var(--font-d);
+    color: var(--ink);
+}
+
+.forecast-icon {
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--ink-mid);
+}
+
+.forecast-desc {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--ink-low);
+}
+
+#dailyForecast {
+    flex-wrap: wrap;
+    min-width: 100%;
+}
+
+@media (max-width: 1100px) {
+    .wrap {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 980px) {
+    nav {
+        padding: 16px 24px;
+    }
+
+    .weather-header,
+    .wrap {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+@media (max-width: 700px) {
+    .weather-header h1 {
+        font-size: 38px;
+    }
+
+    .current-overview {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .current-details {
+        grid-template-columns: 1fr;
+    }
+
+    .forecast-item {
+        min-width: 94px;
+    }
+}

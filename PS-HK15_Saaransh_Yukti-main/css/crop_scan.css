@@ -1,0 +1,207 @@
+@import url('project.css');
+
+/* Customizations for Crop Scan specifically if needed, 
+   but primarily we reuse the project's design system */
+
+:root {
+    --accent-glow: #2E5C34;
+    /* Matching project's green */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    scroll-snap-type: none;
+    /* Disable scroll snap for the scanner page as it's not multi-section */
+    overflow-y: auto;
+}
+
+#page-body {
+    height: auto;
+    overflow-y: visible;
+    scroll-snap-align: none;
+}
+
+.scanner-container {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+
+/* Redesigning the main-card to match the project's aesthetic */
+.main-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 48px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.heading-group {
+    margin-bottom: 32px;
+}
+
+.main-heading {
+    font-family: var(--font-d);
+    font-size: 38px;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+
+.sub-heading {
+    font-size: 14px;
+    color: var(--ink-low);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+}
+
+/* Input Content Styling */
+.input-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.preview-box {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1/1;
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--off);
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.preview-box:hover {
+    border-color: var(--green);
+    background: var(--stone);
+}
+
+.preview-box span {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--ink-low);
+    text-transform: uppercase;
+}
+
+#preview,
+#outputSmallPreview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Button Row */
+.button-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+/* Result Grid */
+#outputPage {
+    display: none;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.info-card {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+}
+
+.info-card h3,
+.long-card h3 {
+    font-family: var(--font-u);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+}
+
+.info-card div,
+.long-card div {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    font-weight: 300;
+}
+
+.image-aside {
+    grid-column: span 2;
+    height: 300px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+.long-card {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 24px;
+}
+
+#diseaseName {
+    font-family: var(--font-d);
+    font-size: 48px;
+    font-style: italic;
+    color: var(--green);
+    margin: 16px 0;
+}
+
+/* Utility classes for animations matching project.js classes if used */
+.fade-in {
+    animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-card {
+        padding: 24px;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .image-aside {
+        grid-column: span 1;
+    }
+
+    .button-row {
+        flex-direction: column;
+        width: 100%;
+    }
+}

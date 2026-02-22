@@ -1,0 +1,401 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmMind â€” What-If Simulator</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../css/what-if.css" />
+  <link rel="stylesheet" href="../css/translate.css" />
+</head>
+
+<body>
+  <div id="page-body">
+    <nav id="main-nav">
+      <a href="project.html#hero" class="logo">
+        <img src="" alt="FarmMind" id="nav-logo-img" />
+        <div id="nav-logo-fallback">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          Logo Image
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="project.html#hero">Overview</a></li>
+        <li><a href="project.html#capabilities">Capabilities</a></li>
+        <li><a href="project.html#platform">Platform</a></li>
+        <li><a href="project.html#interface">Interface</a></li>
+        <li><a href="project.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="profile.html" class="nav-profile" aria-label="Profile" style="text-decoration: none; color: inherit;">
+          <div class="nav-profile-avatar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+            </svg>
+          </div>
+          <span class="nav-profile-label">Profile</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="simulator-container">
+      <header
+        style="max-width: 1400px; margin: 0 auto; padding: 0 48px 32px; border:none; background:transparent; position:static; display:block;">
+        <h1 class="rv on" style="font-size:38px; font-weight:500; margin:0; letter-spacing:-0.01em;">What-If Simulator
+        </h1>
+        <p class="rv on d1" style="color:var(--ink-low); font-weight:300; margin: 8px 0 0; font-size:16px;">Model
+          operational changes and predict outcomes across your farm's lifecycle.</p>
+      </header>
+
+      <div class="simulator-layout">
+        <!-- Sidebar: Configuration -->
+        <aside class="config-panel rv on">
+          <div class="card">
+            <h3>Scenario Profile</h3>
+            <label>Crop Type</label>
+            <select id="crop">
+              <option value="wheat">Wheat</option>
+              <option value="rice">Rice</option>
+              <option value="maize">Maize</option>
+              <option value="cotton">Cotton</option>
+              <option value="vegetables">Vegetables</option>
+            </select>
+            <label>Area (acres)</label>
+            <input id="area" type="number" min="1" value="10" />
+            <label>Rainfall (mm/week)</label>
+            <input id="rain" type="number" min="0" value="25" />
+            <label>Water Access</label>
+            <select id="water">
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+            <label>Base Yield (t/acre)</label>
+            <input id="yieldInput" type="number" step="0.1" value="2.6" />
+            <label>Market Price (â‚¹/t)</label>
+            <input id="priceInput" type="number" value="220" />
+          </div>
+
+          <div class="card">
+            <h3>Environment & Soil</h3>
+            <label>Organic Matter (%)</label>
+            <input id="som" type="number" step="0.1" value="2.4" />
+            <label>Soil pH</label>
+            <input id="ph" type="number" step="0.1" value="6.5" />
+            <label>NPK (kg/ac)</label>
+            <div class="row" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:8px;">
+              <input id="n" type="number" value="60" placeholder="N" />
+              <input id="p" type="number" value="25" placeholder="P" />
+              <input id="k" type="number" value="30" placeholder="K" />
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Operational Controls</h3>
+            <label>Pest Pressure</label>
+            <select id="pest">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+            <label>Fertilizer Strategy</label>
+            <select id="fertilizer">
+              <option value="balanced">Balanced</option>
+              <option value="reduced">Reduced</option>
+              <option value="intensive">Intensive</option>
+            </select>
+            <label>Mechanization</label>
+            <select id="mech">
+              <option value="basic">Basic</option>
+              <option value="standard">Standard</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+
+          <div class="action-area">
+            <button id="run">Run Simulation</button>
+            <button id="reset">Reset</button>
+          </div>
+        </aside>
+
+        <!-- Main Workspace: Results -->
+        <div class="results-engine rv on d2">
+
+          <section class="card outcomes-hero">
+            <h3>Simulation Dashboard</h3>
+            <div class="outcomes-grid">
+              <div class="kpi"><strong id="yieldOut">-</strong><span>Total Yield (t)</span></div>
+              <div class="kpi"><strong id="revOut">-</strong><span>Revenue (â‚¹)</span></div>
+              <div class="kpi"><strong id="profitOut">-</strong><span>Net Profit (â‚¹)</span></div>
+              <div class="kpi"><strong id="waterUse">-</strong><span>Water Stress</span></div>
+            </div>
+            <div class="mini-stats"
+              style="display:flex; gap:24px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border);">
+              <div class="muted">Confidence: <span style="color:var(--green)">High</span></div>
+              <div class="muted">Risk Profile: <span id="risk" style="color:var(--amber)">Medium</span></div>
+            </div>
+          </section>
+
+          <div class="secondary-grid">
+            <div class="card">
+              <h3>AI Insights & Alerts</h3>
+              <ul id="notes">
+                <li style="border-left-color:var(--stone)">Launch simulation to generate AI predictions...</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>Scenario Presets</h3>
+              <p class="muted" style="margin-bottom:16px;">Quickly load tactical operational profiles.</p>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <button class="scenario" data-preset="drought"
+                  style="background:var(--stone); color:var(--ink); border:1px solid var(--border);">Drought</button>
+                <button class="scenario" data-preset="bumper"
+                  style="background:var(--stone); color:var(--ink); border:1px solid var(--border);">Bumper</button>
+                <button class="scenario" data-preset="costshock"
+                  style="background:var(--stone); color:var(--ink); border:1px solid var(--border);">Price
+                  Shock</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Logistics & Loss Modeling</h3>
+            <div class="outcomes-grid" style="grid-template-columns:repeat(3, 1fr);">
+              <div>
+                <label>Storage Duration</label>
+                <input id="storageWeeks" type="number" value="8" />
+              </div>
+              <div>
+                <label>Storage Quality</label>
+                <select id="handling">
+                  <option value="medium">Standard</option>
+                  <option value="high">Premium</option>
+                  <option value="low">Basic</option>
+                </select>
+              </div>
+              <div class="kpi" style="margin-top:0;"><strong id="lossOut">0%</strong><span>Expected Loss</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <script>
+        const $ = (id) => document.getElementById(id);
+        const notes = $("notes");
+        const moneyFmt = new Intl.NumberFormat("en-IN");
+
+        function addNote(text, level) {
+          const li = document.createElement("li");
+          li.textContent = text;
+          li.className = level === "warn" ? "result-warn" : "result-good";
+          notes.appendChild(li);
+        }
+
+        function calcLossPct() {
+          const weeks = Number($("storageWeeks").value) || 0;
+          const handling = $("handling").value;
+          const baseLoss = Math.min(25, weeks * 0.8);
+          const qualityMod = handling === "high" ? -3 : handling === "low" ? 4 : 0;
+          const rainImpact = (Number($("rain").value) || 0) > 40 ? 2 : 0;
+          return Math.max(0, Math.min(40, Math.round((baseLoss + qualityMod + rainImpact) * 10) / 10));
+        }
+
+        function refreshLossOutput() {
+          $("lossOut").textContent = `${calcLossPct()}%`;
+        }
+
+        async function calc() {
+          const runBtn = $("run");
+          const originalText = runBtn.innerHTML;
+
+          // Loading State
+          runBtn.disabled = true;
+          runBtn.innerHTML = `<span style="display:inline-block; animation: spin 1s linear infinite; margin-right:8px;">â—Œ</span> Simulating...`;
+
+          notes.innerHTML = "";
+
+          const data = {
+            crop: $("crop").value,
+            area: Number($("area").value),
+            rainfall: Number($("rain").value),
+            water_availability: $("water").value,
+            market_price: Number($("priceInput").value),
+            base_yield: Number($("yieldInput").value),
+            pest_pressure: $("pest").value,
+            fertilizer_strategy: $("fertilizer").value,
+            mechanization: $("mech").value,
+            soil: {
+              om: Number($("som").value),
+              ph: Number($("ph").value),
+              n: Number($("n").value),
+              p: Number($("p").value),
+              k: Number($("k").value)
+            }
+          };
+
+          try {
+            const response = await authFetch('/api/simulate', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            });
+
+            if (!response.ok) throw new Error('Simulation failed');
+
+            const result = await response.json();
+
+            // UI Mapping
+            $("yieldOut").textContent = result.total_yield.toFixed(1);
+            $("revOut").textContent = moneyFmt.format(Math.round(result.total_revenue));
+            $("profitOut").textContent = moneyFmt.format(Math.round(result.total_profit));
+            $("waterUse").textContent = result.water_stress_percent + "%";
+
+            $("risk").textContent = result.risk_level;
+
+            // Recommendations
+            if (result.ai_insights && result.ai_insights.length > 0) {
+              result.ai_insights.forEach(insight => {
+                addNote(insight, result.risk_level === 'High' ? 'warn' : 'good');
+              });
+            }
+
+            if (result.soil_health_prediction) {
+              addNote("Soil Forecast: " + result.soil_health_prediction, "good");
+            }
+
+            refreshLossOutput();
+
+          } catch (error) {
+            console.error('Simulation Error:', error);
+            alert("Connection Error: Ensure the AI Backend server is running.");
+          } finally {
+            runBtn.disabled = false;
+            runBtn.innerHTML = originalText;
+          }
+        }
+
+        $("run").addEventListener("click", calc);
+        $("reset").addEventListener("click", () => {
+          $("crop").value = "wheat";
+          $("area").value = 10;
+          $("rain").value = 25;
+          $("water").value = "medium";
+          $("priceInput").value = 220;
+          $("yieldInput").value = 2.6;
+          $("pest").value = "medium";
+          $("fertilizer").value = "balanced";
+          $("mech").value = "standard";
+
+          $("som").value = 2.4;
+          $("ph").value = 6.5;
+          $("n").value = 60;
+          $("p").value = 25;
+          $("k").value = 30;
+
+          $("storageWeeks").value = 8;
+          $("handling").value = "medium";
+
+          notes.innerHTML = `<li style="border-left-color:var(--stone)">Launch simulation to generate AI predictions...</li>`;
+
+          $("yieldOut").textContent = "-";
+          $("revOut").textContent = "-";
+          $("profitOut").textContent = "-";
+          $("waterUse").textContent = "-";
+          refreshLossOutput();
+        });
+
+        Array.from(document.querySelectorAll(".scenario")).forEach(btn => {
+          btn.addEventListener("click", () => {
+            const preset = btn.dataset.preset;
+            if (preset === "drought") {
+              $("rain").value = 8;
+              $("water").value = "low";
+              $("pest").value = "medium";
+              $("storageWeeks").value = 10;
+              $("handling").value = "low";
+            }
+            if (preset === "bumper") {
+              $("rain").value = 35;
+              $("water").value = "high";
+              $("pest").value = "low";
+              $("storageWeeks").value = 6;
+              $("handling").value = "high";
+            }
+            if (preset === "costshock") {
+              $("priceInput").value = 18000;
+              $("storageWeeks").value = 8;
+              $("handling").value = "medium";
+            }
+            refreshLossOutput();
+            calc();
+          });
+        });
+
+        ["storageWeeks", "handling", "rain"].forEach(id => {
+          $(id).addEventListener("input", refreshLossOutput);
+          $(id).addEventListener("change", refreshLossOutput);
+        });
+
+        // Pre-fill from profile
+        (function prefill() {
+          const user = JSON.parse(localStorage.getItem("fm_user") || "{}");
+          if (user.primary_crop) {
+            const cropVal = user.primary_crop.toLowerCase();
+            // Match select options
+            if (["wheat", "rice", "maize", "cotton"].includes(cropVal)) $("crop").value = cropVal;
+            else if (cropVal.includes("paddy")) $("crop").value = "rice";
+            else if (["tomato", "potato", "chilli", "onion", "banana", "mango"].includes(cropVal)) $("crop").value = "vegetables";
+          }
+          if (user.farm_size_acres) $("area").value = user.farm_size_acres;
+          if (user.irrigation_src) {
+            const irr = user.irrigation_src.toLowerCase();
+            if (irr.includes("drip") || irr.includes("sprinkler")) $("water").value = "high";
+            else if (irr.includes("borewell") || irr.includes("canal")) $("water").value = "medium";
+            else if (irr.includes("rain")) $("water").value = "low";
+          }
+        })();
+
+        // INR baseline on initial load
+        if (Number($("priceInput").value) < 1000) $("priceInput").value = 18000;
+        refreshLossOutput();
+      </script>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="foot">
+          <div class="foot-brand">Yukti</div>
+          <ul class="foot-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <div class="foot-copy">Â© 2025 Â· PS-HK15 Software Edition</div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../servers/auth-guard.js"></script>
+    <script src="../servers/project.js"></script>
+  </div>
+  <script src="../scripts/translate.js"></script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,632 @@
+[
+  {
+    "key": "login-desktop",
+    "url": "http://127.0.0.1:3000/sites/login.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — Welcome",
+    "overflowX": 0,
+    "offenders": [
+      {
+        "tag": "div",
+        "cls": "auth-form-container",
+        "id": "",
+        "left": 595,
+        "right": 1496,
+        "width": 901
+      },
+      {
+        "tag": "div",
+        "cls": "auth-form-panel register",
+        "id": "",
+        "left": 1226,
+        "right": 2127,
+        "width": 901
+      },
+      {
+        "tag": "div",
+        "cls": "panel-header",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "div",
+        "cls": "logo-text",
+        "id": "",
+        "left": 1406,
+        "right": 1533,
+        "width": 127
+      },
+      {
+        "tag": "button",
+        "cls": "lang-switch",
+        "id": "",
+        "left": 1980,
+        "right": 2047,
+        "width": 67
+      },
+      {
+        "tag": "div",
+        "cls": "auth-hero",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "h1",
+        "cls": "",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "p",
+        "cls": "",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "form",
+        "cls": "auth-form",
+        "id": "registerForm",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "div",
+        "cls": "form-section-header",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "div",
+        "cls": "input-group",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "label",
+        "cls": "",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "input",
+        "cls": "auth-input",
+        "id": "regName",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "div",
+        "cls": "input-row",
+        "id": "",
+        "left": 1406,
+        "right": 2047,
+        "width": 641
+      },
+      {
+        "tag": "div",
+        "cls": "input-group inline",
+        "id": "",
+        "left": 1406,
+        "right": 1718,
+        "width": 312
+      },
+      {
+        "tag": "label",
+        "cls": "",
+        "id": "",
+        "left": 1406,
+        "right": 1718,
+        "width": 312
+      },
+      {
+        "tag": "input",
+        "cls": "auth-input",
+        "id": "regEmail",
+        "left": 1406,
+        "right": 1718,
+        "width": 312
+      },
+      {
+        "tag": "div",
+        "cls": "input-group inline",
+        "id": "",
+        "left": 1734,
+        "right": 2047,
+        "width": 312
+      },
+      {
+        "tag": "label",
+        "cls": "",
+        "id": "",
+        "left": 1734,
+        "right": 2047,
+        "width": 312
+      },
+      {
+        "tag": "input",
+        "cls": "auth-input",
+        "id": "regPhone",
+        "left": 1734,
+        "right": 2047,
+        "width": 312
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "key": "project-desktop",
+    "url": "http://127.0.0.1:3000/sites/project.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — AI Copilot for Farm Operations",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+  },
+  {
+    "key": "copilot-desktop",
+    "url": "http://127.0.0.1:3000/sites/copilot.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — Cloud Copilot",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "pageerror: farms.forEach is not a function"
+    ]
+  },
+  {
+    "key": "crop_scan-desktop",
+    "url": "http://127.0.0.1:3000/sites/crop_scan.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — Plant Disease Scanner",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "crop-info-desktop",
+    "url": "http://127.0.0.1:3000/sites/crop-info.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — Crop Library",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "weather-desktop",
+    "url": "http://127.0.0.1:3000/sites/weather.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — Weather Intelligence",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "agri-news-desktop",
+    "url": "http://127.0.0.1:3000/sites/agri-news.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — Agri Intelligence News",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "key": "community-desktop",
+    "url": "http://127.0.0.1:3000/sites/community.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "The Yard — Farmer Social Hub",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "console: Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "key": "what-if-desktop",
+    "url": "http://127.0.0.1:3000/sites/what-if.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — What-If Simulator",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "profile-desktop",
+    "url": "http://127.0.0.1:3000/sites/profile.html",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false
+    },
+    "title": "FarmMind — Edit Profile",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    ]
+  },
+  {
+    "key": "login-mobile",
+    "url": "http://127.0.0.1:3000/sites/login.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — Welcome",
+    "overflowX": 0,
+    "offenders": [
+      {
+        "tag": "div",
+        "cls": "auth-form-panel register",
+        "id": "",
+        "left": 371,
+        "right": 722,
+        "width": 351
+      },
+      {
+        "tag": "div",
+        "cls": "panel-header",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "div",
+        "cls": "logo-text",
+        "id": "",
+        "left": 411,
+        "right": 538,
+        "width": 127
+      },
+      {
+        "tag": "button",
+        "cls": "lang-switch",
+        "id": "",
+        "left": 615,
+        "right": 682,
+        "width": 67
+      },
+      {
+        "tag": "div",
+        "cls": "auth-hero",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "h1",
+        "cls": "",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "p",
+        "cls": "",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "form",
+        "cls": "auth-form",
+        "id": "registerForm",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "div",
+        "cls": "form-section-header",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "div",
+        "cls": "input-group",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "label",
+        "cls": "",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "input",
+        "cls": "auth-input",
+        "id": "regName",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "div",
+        "cls": "input-row",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      },
+      {
+        "tag": "div",
+        "cls": "input-group inline",
+        "id": "",
+        "left": 411,
+        "right": 538,
+        "width": 128
+      },
+      {
+        "tag": "label",
+        "cls": "",
+        "id": "",
+        "left": 411,
+        "right": 538,
+        "width": 128
+      },
+      {
+        "tag": "input",
+        "cls": "auth-input",
+        "id": "regEmail",
+        "left": 411,
+        "right": 538,
+        "width": 128
+      },
+      {
+        "tag": "div",
+        "cls": "input-group inline",
+        "id": "",
+        "left": 554,
+        "right": 682,
+        "width": 128
+      },
+      {
+        "tag": "label",
+        "cls": "",
+        "id": "",
+        "left": 554,
+        "right": 682,
+        "width": 128
+      },
+      {
+        "tag": "input",
+        "cls": "auth-input",
+        "id": "regPhone",
+        "left": 554,
+        "right": 682,
+        "width": 128
+      },
+      {
+        "tag": "div",
+        "cls": "form-section-header",
+        "id": "",
+        "left": 411,
+        "right": 682,
+        "width": 271
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "key": "project-mobile",
+    "url": "http://127.0.0.1:3000/sites/project.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — AI Copilot for Farm Operations",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+  },
+  {
+    "key": "copilot-mobile",
+    "url": "http://127.0.0.1:3000/sites/copilot.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — Cloud Copilot",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "pageerror: farms.forEach is not a function"
+    ]
+  },
+  {
+    "key": "crop_scan-mobile",
+    "url": "http://127.0.0.1:3000/sites/crop_scan.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — Plant Disease Scanner",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "crop-info-mobile",
+    "url": "http://127.0.0.1:3000/sites/crop-info.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — Crop Library",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "weather-mobile",
+    "url": "http://127.0.0.1:3000/sites/weather.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — Weather Intelligence",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "agri-news-mobile",
+    "url": "http://127.0.0.1:3000/sites/agri-news.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — Agri Intelligence News",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "key": "community-mobile",
+    "url": "http://127.0.0.1:3000/sites/community.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "The Yard — Farmer Social Hub",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "console: Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "key": "what-if-mobile",
+    "url": "http://127.0.0.1:3000/sites/what-if.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — What-If Simulator",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": []
+  },
+  {
+    "key": "profile-mobile",
+    "url": "http://127.0.0.1:3000/sites/profile.html",
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    },
+    "title": "FarmMind — Edit Profile",
+    "overflowX": 0,
+    "offenders": [],
+    "consoleErrors": [
+      "console: Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    ]
+  }
+]

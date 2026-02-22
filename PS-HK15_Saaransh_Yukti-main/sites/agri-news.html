@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmMind â€” Agri Intelligence News</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../css/agri-news.css" />
+  <link rel="stylesheet" href="../css/translate.css" />
+</head>
+
+<body>
+  <div id="page-body">
+    <nav id="main-nav">
+      <a href="project.html#hero" class="logo">
+        <img src="" alt="FarmMind" id="nav-logo-img" />
+        <div id="nav-logo-fallback">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          Logo Image
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="project.html#hero">Overview</a></li>
+        <li><a href="project.html#capabilities">Capabilities</a></li>
+        <li><a href="project.html#platform">Platform</a></li>
+        <li><a href="project.html#interface">Interface</a></li>
+        <li><a href="project.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-profile" aria-label="Profile">
+          <div class="nav-profile-avatar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+            </svg>
+          </div>
+          <span class="nav-profile-label">Profile</span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="news-container">
+      <header
+        style="border-bottom:none; background:transparent; backdrop-filter:none; position:static; padding:0; margin-bottom:16px; display:block;">
+        <h1 class="rv on" style="font-family:var(--font-d); font-size:42px; font-weight:300;">Agri Intelligence News
+        </h1>
+        <p class="rv on d1" style="color:var(--ink-low); font-weight:300;">Real-time updates, market alerts, and
+          agricultural break-throughs from across the globe.</p>
+      </header>
+
+      <section class="alerts rv on d2" id="alertBox">
+        <h3>Alerts & Warnings</h3>
+        <ul id="alertList"></ul>
+      </section>
+
+      <section class="news-grid rv on d3" id="newsFeed"></section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="foot">
+          <div class="foot-brand">Yukti</div>
+          <ul class="foot-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <div class="foot-copy">Â© 2025 Â· PS-HK15 Software Edition</div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../servers/auth-guard.js"></script>
+    <script src="../servers/project.js"></script>
+  </div>
+  <script>
+    /* ======================================================
+       REAL APIs (NO KEY REQUIRED)
+    ====================================================== */
+    const user = JSON.parse(localStorage.getItem("fm_user") || "{}");
+    const cropQ = user.primary_crop || "agriculture";
+    const stateQ = user.state || "India";
+    const NEWS_API =
+      `/api/news?q=${encodeURIComponent(`${cropQ} ${stateQ}`)}&country=IN&limit=6`;
+
+    const WEATHER_API =
+      "https://api.open-meteo.com/v1/forecast?latitude=20.59&longitude=78.96&daily=rain_sum,temperature_2m_max&timezone=auto";
+
+    /* IMAGE */
+    const img = q => `https://source.unsplash.com/600x400/?${q},agriculture`;
+
+    /* ======================================================
+       ALERTS + NOTIFICATIONS
+    ====================================================== */
+    const alertBox = document.getElementById("alertBox");
+    const alertList = document.getElementById("alertList");
+
+    function addAlert(type, message, { notify = false } = {}) {
+      const li = document.createElement("li");
+      li.textContent = message;
+      li.style.color = type === "danger" ? "var(--danger)" : "var(--muted)";
+      alertList.appendChild(li);
+
+      if (notify && "Notification" in window) {
+        if (Notification.permission === "granted") {
+          new Notification("Agri News Alert", { body: message });
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then(p => {
+            if (p === "granted") {
+              new Notification("Agri News Alert", { body: message });
+            }
+          });
+        }
+      }
+    }
+
+    /* ======================================================
+       LOAD NEWS
+    ====================================================== */
+    async function loadNews() {
+      const feed = document.getElementById("newsFeed");
+      feed.innerHTML = "";
+      alertList.innerHTML = "";
+
+      const saved = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+
+      let news;
+      let weather;
+      try {
+        [news, weather] = await Promise.all([
+          authFetch(NEWS_API).then(r => r.ok ? r.json() : Promise.reject(new Error("News API error"))),
+          fetch(WEATHER_API).then(r => r.ok ? r.json() : Promise.reject(new Error("Weather API error")))
+        ]);
+      } catch (err) {
+        addAlert("danger", "Live APIs are unavailable. Showing cached samples.", { notify: true });
+        news = {
+          articles: [
+            { title: "Local market sees steady grain prices", description: "Traders report stable demand for wheat and maize.", url: "#" },
+            { title: "New irrigation drive announced", description: "State launches drip irrigation subsidy for small farms.", url: "#" },
+            { title: "Farm advisory: pest watch this week", description: "Extension officers warn of increased pest activity.", url: "#" }
+          ]
+        };
+        weather = { daily: { rain_sum: [0, 0, 0, 0, 0, 0, 0] } };
+      }
+
+      /* WEATHER ALERTS */
+      (weather.daily?.rain_sum || []).forEach((r, i) => {
+        if (r > 30) {
+          addAlert("danger", `Heavy rainfall expected on day ${i + 1}`, { notify: true });
+        }
+      });
+
+      /* NEWS */
+      (news.articles || []).forEach(n => {
+        const id = (n.url && n.url !== "#")
+          ? n.url.toString()
+          : `${n.title || "news"}-${n.publishedAt || ""}`;
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+      <img src="${img("farming")}">
+      <div class="card-body">
+        <span class="badge">Agri News</span>
+        <h4>${n.title}</h4>
+        <p>${n.description || n.seendate || "Latest agriculture related update."}</p>
+        <div class="card-footer">
+          <a href="${n.url}" target="_blank">Read more â†’</a>
+          <span class="bookmark ${saved.includes(id) ? "saved" : ""}" data-id="${id}">â˜…</span>
+        </div>
+      </div>`;
+        feed.appendChild(card);
+      });
+
+      if (!alertList.children.length) {
+        addAlert("info", "No urgent alerts at this time.");
+      }
+    }
+
+    /* BOOKMARK */
+    document.addEventListener("click", e => {
+      if (!e.target.classList.contains("bookmark")) return;
+      const id = e.target.dataset.id;
+      let data = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+      if (data.includes(id)) {
+        data = data.filter(x => x !== id);
+        e.target.classList.remove("saved");
+      } else {
+        data.push(id);
+        e.target.classList.add("saved");
+      }
+      localStorage.setItem("bookmarks", JSON.stringify(data));
+    });
+
+    loadNews();
+    setInterval(loadNews, 21600000);
+  </script>
+
+  <script src="../scripts/translate.js"></script>
+</body>
+
+</html>
+
+

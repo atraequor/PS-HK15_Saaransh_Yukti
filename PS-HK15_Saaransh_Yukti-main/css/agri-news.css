@@ -1,0 +1,183 @@
+@import url('project.css');
+
+/* Agri News Page Custom Styles */
+
+body {
+    display: flex;
+    flex-direction: column;
+    scroll-snap-type: none;
+    overflow-y: auto;
+    background: var(--off);
+}
+
+#page-body {
+    height: auto;
+    overflow-y: visible;
+    scroll-snap-align: none;
+}
+
+.news-container {
+    padding-top: 100px;
+    padding-bottom: 80px;
+}
+
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Alert Styling */
+.alerts {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+    padding: 32px;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.alerts h3 {
+    margin: 0 0 16px;
+    font-family: var(--font-d);
+    font-size: 24px;
+    color: #c53030;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alerts h3::before {
+    content: '!';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #c53030;
+    color: white;
+    border-radius: 50%;
+    font-family: var(--font-u);
+    font-size: 14px;
+}
+
+#alertList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#alertList li {
+    padding: 8px 0;
+    font-family: var(--font-u);
+    font-size: 14px;
+    border-bottom: 1px solid rgba(197, 48, 48, 0.1);
+}
+
+/* News Grid */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 32px;
+}
+
+/* Card Styling */
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.badge {
+    font-family: var(--font-u);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--stone);
+    color: var(--green);
+    padding: 4px 12px;
+    border-radius: 6px;
+    width: max-content;
+}
+
+.card h4 {
+    margin: 0;
+    font-family: var(--font-d);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.3;
+}
+
+.card p {
+    margin: 0;
+    font-family: var(--font-u);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-low);
+    line-height: 1.6;
+}
+
+.card-footer {
+    padding-top: 16px;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+}
+
+.card a {
+    text-decoration: none;
+    font-family: var(--font-u);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--green);
+    transition: color 0.2s;
+}
+
+.card a:hover {
+    color: var(--ink);
+}
+
+.bookmark {
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--border);
+    transition: color 0.2s;
+}
+
+.bookmark.saved {
+    color: var(--amber);
+}
+
+@media (max-width: 480px) {
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+}

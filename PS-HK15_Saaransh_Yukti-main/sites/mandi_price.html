@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FarmMind — Mandi Prices</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/community.css" />
+    <style>
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .price-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 8px;
+        }
+
+        .price-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--ink-low);
+        }
+
+        .price-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .price-change {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .price-change.down {
+            color: #b91c1c;
+        }
+
+        .update-pill {
+            margin-top: 8px;
+            display: inline-flex;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: var(--stone);
+            font-size: 12px;
+            color: var(--ink-mid);
+        }
+    </style>
+    <link rel="stylesheet" href="../css/translate.css" />
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <aside class="left-col">
+            <div class="sidebar-card">
+                <div class="profile-summary">
+                    <div class="p-avatar" id="myAvatar">?</div>
+                    <h2 class="p-name" id="myName">Farmer</h2>
+                    <p class="p-bio" id="myBio">Loading profile...</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-val" id="marketCount">0</span>
+                        <span class="stat-lbl">Markets Tracked</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-val" id="cropCount">0</span>
+                        <span class="stat-lbl">Crops Listed</span>
+                    </div>
+                </div>
+
+                <a href="community.html" class="back-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Back to Community
+                </a>
+            </div>
+        </aside>
+
+        <main class="middle-col">
+            <header class="feed-header">
+                <div>
+                    <h1>Mandi Prices</h1>
+                    <div class="update-pill" id="updatedAt">Updated: --</div>
+                </div>
+                <input id="priceSearch" class="search-inline" type="text"
+                    placeholder="Search crop, market, or state...">
+            </header>
+
+            <div class="price-grid" id="priceGrid">
+                <!-- Cards injected -->
+            </div>
+        </main>
+
+        <aside class="right-col">
+            <div class="intel-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 3h18v18H3z" />
+                    <path d="M7 7h10M7 12h10M7 17h6" />
+                </svg>
+                Market Notes
+            </div>
+            <div class="sidebar-card" style="margin-top:16px;">
+                <p class="p-bio" style="text-align:left;">
+                    Prices are indicative for reference. Use local mandi bulletins for final trades.
+                </p>
+            </div>
+        </aside>
+
+    </div>
+
+    <script src="../servers/auth-guard.js"></script>
+    <script>
+        const $ = id => document.getElementById(id);
+
+        function initUser() {
+            const user = JSON.parse(localStorage.getItem('fm_user') || '{}');
+            if (user.full_name) {
+                $('myName').textContent = user.full_name;
+                $('myAvatar').textContent = user.full_name[0];
+                $('myBio').textContent = `${user.primary_crop || 'Farmer'} · ${user.district || 'India'}`;
+            }
+        }
+
+        function renderPrices(items) {
+            const grid = $('priceGrid');
+            grid.innerHTML = items.map(item => {
+                const change = item.change || '';
+                const isDown = change.startsWith('-');
+                return `
+                    <div class="price-card">
+                        <div class="price-meta">
+                            <span>${item.crop}</span>
+                            <span>${item.state}</span>
+                        </div>
+                        <div style="font-weight:600;">${item.market}</div>
+                        <div class="price-value">₹ ${item.price_per_quintal}/qt</div>
+                        <div class="price-change ${isDown ? 'down' : ''}">${change}</div>
+                    </div>
+                `;
+            }).join('');
+
+            const markets = new Set(items.map(i => i.market));
+            const crops = new Set(items.map(i => i.crop));
+            $('marketCount').textContent = markets.size;
+            $('cropCount').textContent = crops.size;
+        }
+
+        async function loadPrices(query = '') {
+            const url = query ? `/api/mandi-prices?q=${encodeURIComponent(query)}` : '/api/mandi-prices';
+            try {
+                const res = await authFetch(url);
+                const data = await res.json();
+                $('updatedAt').textContent = `Updated: ${new Date(data.updated_at).toLocaleString()}`;
+                renderPrices(data.items || []);
+            } catch (e) {
+                $('priceGrid').innerHTML = '<div class="post-card">Unable to load mandi prices.</div>';
+            }
+        }
+
+        $('priceSearch').addEventListener('input', (e) => {
+            loadPrices(e.target.value.trim());
+        });
+
+        initUser();
+        loadPrices();
+    </script>
+    <script src="../scripts/translate.js"></script>
+</body>
+
+</html>

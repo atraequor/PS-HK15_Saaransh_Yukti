@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FarmMind - AI Farmer Copilot</title>
+  <meta name="description" content="Conversational knowledge engine that turns informal farm observations into structured agronomy guidance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/copilot.css" />
+  <link rel="stylesheet" href="../css/translate.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">YK</div>
+        <div>
+          <p class="brand-title">AI Farmer Copilot</p>
+          <p class="brand-tagline">Conversational Knowledge Engine for Informal Farm Data</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="project.html" class="ghost-button" role="button">Back to Dashboard</a>
+        <button class="ghost-button" id="openProfile" type="button">Profile and Settings</button>
+        <div class="status-pill" id="statusBadge" role="status" aria-live="polite">Ready</div>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <section class="profile-card" aria-live="polite">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Farmer Context</p>
+            <h2>Active Profile</h2>
+            <p class="supporting">Your context is injected into every agronomy response.</p>
+          </div>
+          <button class="primary-button" id="editProfileInline" type="button">Update Profile</button>
+        </div>
+        <div class="profile-grid">
+          <div class="profile-item">
+            <span class="label">Location</span>
+            <span class="value" id="profileLocation">Not set</span>
+          </div>
+          <div class="profile-item">
+            <span class="label">Soil Type</span>
+            <span class="value" id="profileSoil">Not set</span>
+          </div>
+          <div class="profile-item">
+            <span class="label">Current Crop</span>
+            <span class="value" id="profileCrop">Not set</span>
+          </div>
+          <div class="profile-item">
+            <span class="label">Skill Level</span>
+            <span class="value" id="profileSkills">Not set</span>
+          </div>
+        </div>
+        <div class="profile-hint" id="profileHint">Complete your profile to unlock crop-specific quick actions.</div>
+      </section>
+
+      <section class="chat-card" aria-label="Copilot chat">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Copilot Workspace</p>
+            <h2>Ask, Observe, Act</h2>
+            <p class="supporting">Describe what you see in the field. The copilot will structure the guidance.</p>
+          </div>
+          <div class="context-pill" id="contextPill">Context ready</div>
+        </div>
+
+        <div class="chat-history" id="chatHistory" role="log" aria-live="polite" aria-relevant="additions">
+          <div class="chat-empty" id="chatEmpty">
+            Start by sharing a field observation, a pest concern, or an irrigation question.
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <p class="eyebrow">Quick Actions</p>
+          <div class="chip-row" id="quickActions" role="list"></div>
+        </div>
+
+        <form class="chat-input" id="chatForm">
+          <label for="userMessage" class="sr-only">Type your message</label>
+          <textarea id="userMessage" placeholder="Describe an observation, issue, or question from your field..."></textarea>
+          <div class="input-actions">
+            <button class="icon-button" id="voiceStub" type="button" aria-label="Voice input (coming soon)">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.93V21h2v-3.07A7 7 0 0 0 19 11h-2z" />
+              </svg>
+            </button>
+            <button class="primary-button" id="sendMessage" type="submit">Send</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <div class="drawer" id="profileDrawer" aria-hidden="true" role="dialog" aria-labelledby="profileTitle">
+    <div class="drawer-overlay" data-close="true"></div>
+    <div class="drawer-panel" role="document">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow">Profile and Settings</p>
+          <h3 id="profileTitle">Farmer Profile</h3>
+          <p class="supporting">Captured once, reused in every system prompt.</p>
+        </div>
+        <button class="icon-button" data-close="true" type="button" aria-label="Close profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.3 19.71 2.89 18.3 9.17 12 2.89 5.71 4.3 4.29l6.29 6.3 6.29-6.3z" />
+          </svg>
+        </button>
+      </div>
+      <form id="profileForm" class="drawer-body">
+        <label>
+          Location
+          <input type="text" name="location" placeholder="e.g., Salinas Valley, CA" required />
+        </label>
+        <label>
+          Soil Type
+          <input type="text" name="soil" placeholder="e.g., Loamy, Black cotton" required />
+        </label>
+        <label>
+          Current Crop
+          <input type="text" name="crop" placeholder="e.g., Lettuce, Cotton" required />
+        </label>
+        <label>
+          Skill Level
+          <select name="skills" required>
+            <option value="Beginner">Beginner</option>
+            <option value="Traditional">Traditional</option>
+            <option value="Tech-Savvy">Tech-Savvy</option>
+          </select>
+        </label>
+        <div class="drawer-footer">
+          <button class="ghost-button" type="button" data-close="true">Cancel</button>
+          <button class="primary-button" type="submit">Save Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../servers/copilot.js"></script>
+  <script src="../scripts/translate.js"></script>
+</body>
+</html>

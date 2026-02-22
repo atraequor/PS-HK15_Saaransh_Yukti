@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FarmMind — Edit Profile</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/auth.css" />
+    <style>
+        .auth-brand {
+            clip-path: polygon(0 0, 88% 0, 100% 100%, 0 100%);
+            flex: 1.25;
+            min-width: 45%;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .brand-mark {
+            position: absolute;
+            left: 40px;
+            bottom: 40px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            font-size: 20px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            z-index: 2;
+        }
+
+        .auth-form-wrap {
+            max-width: 560px;
+            width: 100%;
+        }
+
+        .auth-form-panel {
+            align-items: flex-start;
+        }
+
+        @media (min-width: 1001px) {
+            .auth-form-panel {
+                margin-left: -60px;
+                padding-left: 120px;
+                clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        .back-nav {
+            margin-bottom: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-red);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-section-header {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--ink-low);
+            margin: 24px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .form-section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #eef1f4;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .brand-mark {
+                display: none;
+            }
+        }
+    </style>
+  <link rel="stylesheet" href="../css/translate.css" />
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-brand">
+            <div id="brandBg" class="auth-brand-bg"></div>
+            <div class="auth-brand-overlay"></div>
+            <div class="brand-mark">YUKTI</div>
+
+        </div>
+
+        <div class="auth-form-panel">
+            <div class="auth-form-wrap">
+                <div class="panel-header">
+                    <div class="logo-text">YUKTI</div>
+                    <button class="lang-switch">EN</button>
+                </div>
+
+                <div class="auth-hero">
+                    <h1>Edit Profile</h1>
+                    <p>Keep your farm details current for sharper recommendations.</p>
+                </div>
+
+                <a href="project.html" class="back-nav">← Back to Dashboard</a>
+                <div id="authMsg" class="auth-msg"></div>
+
+                <form class="auth-form" id="editProfileForm">
+                    <div class="form-section-header">Identity</div>
+                    <div class="input-group">
+                        <label>Full name</label>
+                        <input type="text" id="full_name" class="auth-input" required />
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Phone number</label>
+                            <input type="tel" id="phone" class="auth-input" />
+                        </div>
+                        <div class="input-group">
+                            <label>Role</label>
+                            <select id="role" class="auth-input">
+                                <option value="farmer">Farmer</option>
+                                <option value="agronomist">Agronomist</option>
+                                <option value="manager">Farm Manager</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section-header">Location</div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>State</label>
+                            <select id="state" class="auth-input">
+                                <option value="">Select state</option>
+                                <option>Andhra Pradesh</option>
+                                <option>Assam</option>
+                                <option>Bihar</option>
+                                <option>Chhattisgarh</option>
+                                <option>Gujarat</option>
+                                <option>Haryana</option>
+                                <option>Himachal Pradesh</option>
+                                <option>Jharkhand</option>
+                                <option>Karnataka</option>
+                                <option>Kerala</option>
+                                <option>Madhya Pradesh</option>
+                                <option>Maharashtra</option>
+                                <option>Manipur</option>
+                                <option>Meghalaya</option>
+                                <option>Mizoram</option>
+                                <option>Nagaland</option>
+                                <option>Odisha</option>
+                                <option>Punjab</option>
+                                <option>Rajasthan</option>
+                                <option>Sikkim</option>
+                                <option>Tamil Nadu</option>
+                                <option>Telangana</option>
+                                <option>Tripura</option>
+                                <option>Uttar Pradesh</option>
+                                <option>Uttarakhand</option>
+                                <option>West Bengal</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>District</label>
+                            <input type="text" id="district" class="auth-input" />
+                        </div>
+                    </div>
+
+                    <div class="form-section-header">Farm Details</div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Farm size (acres)</label>
+                            <input type="number" id="farm_size_acres" step="0.1" class="auth-input" />
+                        </div>
+                        <div class="input-group">
+                            <label>Experience (years)</label>
+                            <input type="number" id="experience_yrs" class="auth-input" />
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Primary crop</label>
+                            <select id="primary_crop" class="auth-input">
+                                <option value="">Select crop</option>
+                                <option>Wheat</option>
+                                <option>Rice / Paddy</option>
+                                <option>Maize</option>
+                                <option>Soybean</option>
+                                <option>Sugarcane</option>
+                                <option>Cotton</option>
+                                <option>Groundnut</option>
+                                <option>Sunflower</option>
+                                <option>Mustard</option>
+                                <option>Onion</option>
+                                <option>Tomato</option>
+                                <option>Potato</option>
+                                <option>Chilli</option>
+                                <option>Turmeric</option>
+                                <option>Banana</option>
+                                <option>Mango</option>
+                                <option>Grapes</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Soil type</label>
+                            <select id="soil_type" class="auth-input">
+                                <option value="">Select soil</option>
+                                <option>Sandy</option>
+                                <option>Loamy</option>
+                                <option>Clay</option>
+                                <option>Silty</option>
+                                <option>Sandy Loam</option>
+                                <option>Clay Loam</option>
+                                <option>Black Cotton</option>
+                                <option>Red Laterite</option>
+                                <option>Alluvial</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Irrigation source</label>
+                        <select id="irrigation_src" class="auth-input">
+                            <option value="">Select source</option>
+                            <option>Rain-fed only</option>
+                            <option>Borewell / Tubewell</option>
+                            <option>Canal / River</option>
+                            <option>Drip Irrigation</option>
+                            <option>Sprinkler System</option>
+                            <option>Tank / Pond</option>
+                            <option>Mixed</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="login-btn" id="saveBtn">
+                        <div class="spinner" id="saveSpinner"></div>
+                        <span id="saveBtnText">Save Changes</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../servers/auth-guard.js"></script>
+    <script>
+        const $ = id => document.getElementById(id);
+
+        async function loadProfile() {
+            try {
+                const res = await authFetch('/api/auth/me');
+                if (!res.ok) throw new Error('Failed to load profile');
+                const user = await res.json();
+
+                $('full_name').value = user.full_name || '';
+                $('phone').value = user.phone || '';
+                $('role').value = user.role || 'farmer';
+                $('state').value = user.state || '';
+                $('district').value = user.district || '';
+                $('farm_size_acres').value = user.farm_size_acres || '';
+                $('experience_yrs').value = user.experience_yrs || '';
+                $('primary_crop').value = user.primary_crop || '';
+                $('soil_type').value = user.soil_type || '';
+                $('irrigation_src').value = user.irrigation_src || '';
+            } catch (err) {
+                showMsg(err.message);
+            }
+        }
+
+        function showMsg(text, type = 'error') {
+            const el = $('authMsg');
+            el.className = `auth-msg ${type}`;
+            el.innerHTML = text;
+            el.style.display = 'flex';
+        }
+
+        $('editProfileForm').onsubmit = async (e) => {
+            e.preventDefault();
+            $('saveBtn').disabled = true;
+            $('saveSpinner').style.display = 'block';
+            $('saveBtnText').textContent = 'Saving...';
+
+            const body = {
+                full_name: $('full_name').value,
+                phone: $('phone').value,
+                role: $('role').value,
+                state: $('state').value,
+                district: $('district').value,
+                farm_size_acres: parseFloat($('farm_size_acres').value) || null,
+                experience_yrs: parseInt($('experience_yrs').value) || 0,
+                primary_crop: $('primary_crop').value,
+                soil_type: $('soil_type').value,
+                irrigation_src: $('irrigation_src').value
+            };
+
+            try {
+                const res = await authFetch('/api/auth/me', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Update failed');
+
+                localStorage.setItem('fm_user', JSON.stringify(data.user));
+                showMsg('Profile updated successfully!', 'success');
+                setTimeout(() => window.location.href = 'project.html', 1000);
+            } catch (err) {
+                showMsg(err.message);
+            } finally {
+                $('saveBtn').disabled = false;
+                $('saveSpinner').style.display = 'none';
+                $('saveBtnText').textContent = 'Save Changes';
+            }
+        };
+
+        loadProfile();
+    </script>
+  <script src="../scripts/translate.js"></script>
+</body>
+
+</html>

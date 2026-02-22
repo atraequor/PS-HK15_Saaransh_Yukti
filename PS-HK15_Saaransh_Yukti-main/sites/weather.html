@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmMind - Weather Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/weather.css" />
+  <link rel="stylesheet" href="../css/translate.css" />
+</head>
+<body>
+  <div id="page-body">
+    <nav id="main-nav">
+      <a href="project.html#hero" class="logo">
+        <img src="" alt="FarmMind" id="nav-logo-img" />
+        <div id="nav-logo-fallback">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          Logo Image
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="project.html#hero">Overview</a></li>
+        <li><a href="project.html#capabilities">Capabilities</a></li>
+        <li><a href="project.html#platform">Platform</a></li>
+        <li><a href="project.html#interface">Interface</a></li>
+        <li><a href="project.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="profile.html" class="nav-profile" aria-label="Profile" style="text-decoration:none; color:inherit;">
+          <div class="nav-profile-avatar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+            </svg>
+          </div>
+          <span class="nav-profile-label">Profile</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="weather-container">
+      <header class="weather-header">
+        <h1>Weather Intelligence</h1>
+        <p>Track current conditions, next 12 hours, and 7-day outlook in one operational view for field planning.</p>
+      </header>
+
+      <div class="wrap">
+        <aside class="panel">
+          <h2 class="title">Location Input</h2>
+          <p class="muted">Enter your state and district to load forecasts from live weather APIs.</p>
+
+          <div class="input-group">
+            <input type="text" id="state" placeholder="State (example: Odisha)" value="Odisha" />
+            <input type="text" id="district" placeholder="District (example: Rayagada)" value="Rayagada" />
+            <button id="weatherBtn" type="button">Get Weather</button>
+          </div>
+
+          <div class="status">
+            <div class="debug" id="debug"></div>
+            <div class="loading" id="loading">Fetching weather data...</div>
+            <div class="error" id="error"></div>
+          </div>
+        </aside>
+
+        <section class="panel weather-section" id="weatherCard" style="display:none;">
+          <div class="weather-section">
+            <h3 class="section-title">Current Conditions</h3>
+            <div class="current-weather">
+              <div class="location" id="location"></div>
+              <div class="current-overview">
+                <div>
+                  <div class="temp" id="temperature">--C</div>
+                  <div class="condition" id="weatherDesc">-</div>
+                </div>
+              </div>
+
+              <div class="current-details">
+                <div class="detail-item">
+                  <span class="detail-label">Humidity</span>
+                  <div class="detail-value" id="humidity">--%</div>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Wind Speed</span>
+                  <div class="detail-value" id="windSpeed">-- km/h</div>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Precipitation</span>
+                  <div class="detail-value" id="precipitation">-- mm</div>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Pressure</span>
+                  <div class="detail-value" id="pressure">-- hPa</div>
+                </div>
+              </div>
+
+              <div class="coordinates" id="coordinates"></div>
+            </div>
+          </div>
+
+          <div class="weather-section">
+            <h3 class="section-title">Next 12 Hours <span class="section-hint">Scroll horizontally</span></h3>
+            <div class="hourly-scroll">
+              <div class="forecast-grid" id="hourlyForecast"></div>
+            </div>
+          </div>
+
+          <div class="weather-section">
+            <h3 class="section-title">Next 7 Days</h3>
+            <div class="forecast-grid" id="dailyForecast"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="foot">
+          <div class="foot-brand">Yukti</div>
+          <ul class="foot-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <div class="foot-copy">&copy; 2025 - PS-HK15 Software Edition</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const weatherBtn = document.getElementById('weatherBtn');
+
+    async function getWeather() {
+      const state = document.getElementById('state').value.trim();
+      const district = document.getElementById('district').value.trim();
+
+      if (!state || !district) {
+        showError('Please enter both state and district.');
+        return;
+      }
+
+      setLoading(true);
+      clearDebug();
+      addDebug('Searching for: "' + district + ', ' + state + ', India"');
+
+      try {
+        const geoUrl = 'https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(district + ', ' + state + ', India') + '&count=1&language=en&format=json';
+        addDebug('Step 1: Geocoding location...');
+
+        const geoResponse = await fetch(geoUrl);
+        const geoData = await geoResponse.json();
+
+        if (!geoData.results || geoData.results.length === 0) {
+          const fallbackUrl = 'https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(district + ', India') + '&count=1&language=en&format=json';
+          const fallbackResponse = await fetch(fallbackUrl);
+          const fallbackData = await fallbackResponse.json();
+
+          if (!fallbackData.results || fallbackData.results.length === 0) {
+            throw new Error('Location not found. Check spelling or try a nearby major city.');
+          }
+
+          geoData.results = fallbackData.results;
+        }
+
+        const result = geoData.results[0];
+        const lat = result.latitude;
+        const lon = result.longitude;
+        const locationName = result.name;
+        const country = result.country || 'India';
+
+        addDebug('Location found: ' + locationName + ' (' + lat.toFixed(2) + ', ' + lon.toFixed(2) + ')');
+
+        const weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon + '&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,pressure_msl&hourly=temperature_2m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code&timezone=Asia%2FKolkata&forecast_days=7';
+
+        addDebug('Step 2: Fetching weather forecast...');
+        const weatherResponse = await fetch(weatherUrl);
+        const weatherData = await weatherResponse.json();
+
+        displayWeather(weatherData, locationName, country, lat, lon);
+        addDebug('Weather loaded successfully.');
+      } catch (error) {
+        addDebug('Error: ' + error.message);
+        showError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function displayWeather(data, location, country, lat, lon) {
+      const current = data.current;
+
+      document.getElementById('location').textContent = location + ', ' + country;
+      document.getElementById('temperature').textContent = Math.round(current.temperature_2m) + 'C';
+      document.getElementById('weatherDesc').textContent = getWeatherLabel(current.weather_code);
+      document.getElementById('humidity').textContent = Math.round(current.relative_humidity_2m) + '%';
+      document.getElementById('windSpeed').textContent = Math.round(current.wind_speed_10m * 3.6) + ' km/h';
+      document.getElementById('precipitation').textContent = current.precipitation + ' mm';
+      document.getElementById('pressure').textContent = Math.round(current.pressure_msl) + ' hPa';
+      document.getElementById('coordinates').textContent = 'Lat ' + lat.toFixed(2) + ', Lon ' + lon.toFixed(2);
+
+      displayHourlyForecast(data.hourly, data.hourly.time);
+      displayDailyForecast(data.daily);
+
+      document.getElementById('weatherCard').style.display = 'block';
+    }
+
+    function displayHourlyForecast(hourlyData, timeData) {
+      const container = document.getElementById('hourlyForecast');
+      container.innerHTML = '';
+
+      for (let i = 0; i < Math.min(12, timeData.length); i++) {
+        const time = new Date(timeData[i]);
+        const temp = Math.round(hourlyData.temperature_2m[i]);
+        const precip = hourlyData.precipitation[i];
+        const code = hourlyData.weather_code[i];
+
+        const hour = time.getHours();
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const displayHour = hour % 12 || 12;
+
+        container.innerHTML +=
+          '<div class="forecast-item">' +
+            '<div class="forecast-time">' + displayHour + ampm + '</div>' +
+            '<div class="forecast-temp">' + temp + 'C</div>' +
+            '<div class="forecast-icon">' + getWeatherLabel(code) + '</div>' +
+            (precip > 0 ? '<div class="forecast-desc">' + precip + ' mm</div>' : '') +
+          '</div>';
+      }
+    }
+
+    function displayDailyForecast(dailyData) {
+      const container = document.getElementById('dailyForecast');
+      container.innerHTML = '';
+
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      for (let i = 1; i < Math.min(8, dailyData.time.length); i++) {
+        const date = new Date(dailyData.time[i]);
+        const dayName = days[date.getDay()];
+        const maxTemp = Math.round(dailyData.temperature_2m_max[i]);
+        const minTemp = Math.round(dailyData.temperature_2m_min[i]);
+        const precip = dailyData.precipitation_sum[i];
+        const code = dailyData.weather_code[i];
+
+        container.innerHTML +=
+          '<div class="forecast-item">' +
+            '<div class="forecast-time">' + dayName + '</div>' +
+            '<div class="forecast-temp">' + maxTemp + 'C / ' + minTemp + 'C</div>' +
+            '<div class="forecast-icon">' + getWeatherLabel(code) + '</div>' +
+            (precip > 0 ? '<div class="forecast-desc">' + precip + ' mm</div>' : '') +
+          '</div>';
+      }
+    }
+
+    function getWeatherLabel(code) {
+      if (code === 0) return 'Clear';
+      if (code === 1 || code === 2) return 'Partly Cloudy';
+      if (code === 3) return 'Overcast';
+      if (code === 45 || code === 48) return 'Fog';
+      if (code === 51 || code === 53 || code === 55) return 'Drizzle';
+      if (code === 61 || code === 63 || code === 65 || code === 80 || code === 81 || code === 82) return 'Rain';
+      if (code === 71 || code === 73 || code === 75) return 'Snow';
+      if (code === 95 || code === 96 || code === 99) return 'Storm';
+      return 'Cloudy';
+    }
+
+    function setLoading(show) {
+      document.getElementById('loading').style.display = show ? 'block' : 'none';
+      weatherBtn.disabled = show;
+      weatherBtn.textContent = show ? 'Loading...' : 'Get Weather';
+    }
+
+    function addDebug(message) {
+      const debugEl = document.getElementById('debug');
+      debugEl.textContent += (debugEl.textContent ? '\n' : '') + message;
+      debugEl.style.display = 'block';
+      debugEl.scrollTop = debugEl.scrollHeight;
+    }
+
+    function clearDebug() {
+      document.getElementById('debug').textContent = '';
+      document.getElementById('error').style.display = 'none';
+    }
+
+    function showError(message) {
+      document.getElementById('error').textContent = message;
+      document.getElementById('error').style.display = 'block';
+    }
+
+    weatherBtn.addEventListener('click', getWeather);
+    document.getElementById('state').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') getWeather();
+    });
+    document.getElementById('district').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') getWeather();
+    });
+
+    window.addEventListener('load', function () {
+      document.getElementById('state').value = 'Odisha';
+      document.getElementById('district').value = 'Rayagada';
+      setTimeout(getWeather, 800);
+    });
+  </script>
+
+  <script src="../servers/auth-guard.js"></script>
+  <script src="../servers/project.js"></script>
+  <script src="../scripts/translate.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,458 @@
+/* ── FARMER SOCIAL: THE YARD ── */
+
+:root {
+    --white: #FFFFFF;
+    --off: #F9F8F6;
+    --stone: #F0EEE9;
+    --ink: #111110;
+    --ink-mid: #4A4A46;
+    --ink-low: #9A9A95;
+    --green: #2E5C34;
+    --green-glow: rgba(46, 92, 52, 0.08);
+    --border: rgba(17, 17, 16, .06);
+    --radius: 24px;
+    --font-d: 'Cormorant Garamond', serif;
+    --font-u: 'Outfit', sans-serif;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+body {
+    background: var(--off);
+    font-family: var(--font-u);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ── LAYOUT ── */
+.app-shell {
+    display: grid;
+    grid-template-columns: 280px 1fr 340px;
+    max-width: 1440px;
+    margin: 0 auto;
+    gap: 32px;
+    padding: 32px;
+    min-height: 100vh;
+}
+
+@media (max-width: 1200px) {
+    .app-shell {
+        grid-template-columns: 240px 1fr;
+    }
+
+    .right-col {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) {
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .left-col {
+        display: none;
+    }
+}
+
+/* ── LEFT COL: MINI PROFILE ── */
+.sidebar-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: sticky;
+    top: 32px;
+    box-shadow: var(--shadow);
+}
+
+.profile-summary {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.p-avatar {
+    width: 80px;
+    height: 80px;
+    background: var(--green);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 auto 16px;
+}
+
+.p-name {
+    font-family: var(--font-d);
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.p-bio {
+    color: var(--ink-low);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-val {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--green);
+}
+
+.stat-lbl {
+    font-size: 11px;
+    color: var(--ink-low);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.back-link {
+    margin-top: 32px;
+    display: block;
+    color: var(--ink-mid);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-link:hover {
+    color: var(--green);
+}
+
+/* ── MIDDLE COL: FEED ── */
+.feed-header {
+    margin-bottom: 32px;
+}
+
+.feed-header h1 {
+    font-family: var(--font-d);
+    font-size: 38px;
+    font-weight: 300;
+    margin: 0;
+}
+
+.search-inline {
+    width: 100%;
+    margin-top: 14px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-family: var(--font-u);
+    font-size: 14px;
+}
+
+.composer {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+}
+
+.composer textarea {
+    width: 100%;
+    border: none;
+    font-family: var(--font-u);
+    font-size: 16px;
+    resize: none;
+    min-height: 80px;
+    outline: none;
+    margin-bottom: 16px;
+}
+
+.composer-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.pill-select {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-family: var(--font-u);
+}
+
+.btn-post {
+    background: var(--ink);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-post:hover {
+    background: var(--green);
+    transform: translateY(-1px);
+}
+
+/* ── POST CARDS ── */
+.post-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+}
+
+.post-card:hover {
+    border-color: rgba(46, 92, 52, 0.2);
+}
+
+.post-u-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.u-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--stone);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.u-info {
+    flex: 1;
+}
+
+.u-name {
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    width: 100%;
+}
+
+.delete-trigger {
+    background: none;
+    border: none;
+    color: var(--ink-low);
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.post-card:hover .delete-trigger {
+    opacity: 1;
+}
+
+.delete-trigger:hover {
+    color: #ce3131;
+}
+
+.u-meta {
+    font-size: 12px;
+    color: var(--ink-low);
+}
+
+.category-tag {
+    background: var(--green-glow);
+    color: var(--green);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.post-body {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    /* Fix for long text */
+    word-break: break-word;
+}
+
+.post-img {
+    width: 100%;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    max-height: 400px;
+}
+
+.post-media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.post-media-grid img,
+.post-media-grid video {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    max-height: 220px;
+    object-fit: cover;
+}
+
+.post-actions {
+    display: flex;
+    gap: 24px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--ink-low);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.action-btn:hover {
+    color: var(--green);
+}
+
+.action-btn.active {
+    color: var(--green);
+}
+
+.action-btn.active svg {
+    fill: var(--green);
+}
+
+/* ── COMMENTS ── */
+.comments-section {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+}
+
+.comment {
+    margin-bottom: 12px;
+}
+
+.c-author {
+    font-weight: 600;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+.c-text {
+    font-size: 13px;
+    color: var(--ink-mid);
+}
+
+.more-link {
+    background: none;
+    border: none;
+    color: var(--green);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0;
+    margin-top: 6px;
+}
+
+.c-input-wrap {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.c-input {
+    flex: 1;
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    outline: none;
+}
+
+/* ── RIGHT COL: NEWS ── */
+.intel-header {
+    font-family: var(--font-d);
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.news-mini-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: 0.2s;
+}
+
+.news-mini-card:hover {
+    border-color: var(--green);
+    transform: translateX(4px);
+}
+
+.n-source {
+    font-size: 10px;
+    color: var(--green);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.n-title {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+}

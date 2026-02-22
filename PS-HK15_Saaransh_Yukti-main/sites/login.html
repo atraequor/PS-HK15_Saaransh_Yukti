@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FarmMind — Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/auth.css" />
+    <style>
+        .auth-brand {
+            clip-path: polygon(0 0, 88% 0, 100% 100%, 0 100%);
+            flex: 1.25;
+            min-width: 45%;
+        }
+
+        .auth-form-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .auth-form-panel {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-left: 0;
+            clip-path: none;
+            padding: 60px 80px;
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .brand-mark {
+            position: absolute;
+            left: 40px;
+            bottom: 40px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            font-size: 20px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            z-index: 2;
+        }
+
+        .auth-form-panel.register {
+            display: none;
+        }
+
+        body[data-mode="register"] .auth-form-panel.login {
+            display: none;
+        }
+
+        body[data-mode="register"] .auth-form-panel.register {
+            display: flex;
+        }
+
+        .panel-header {
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 8px;
+            padding: 6px;
+            border-radius: 999px;
+            background: #f3f4f6;
+        }
+
+        .mode-toggle .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .mode-toggle .mode-btn.active {
+            background: #111;
+            color: #fff;
+        }
+
+        .form-section-header {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--ink-low);
+            margin: 24px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .form-section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #eef1f4;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group.inline {
+            margin-bottom: 0;
+        }
+
+        .auth-form-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .auth-form-panel::-webkit-scrollbar-thumb {
+            background: #eee;
+            border-radius: 10px;
+        }
+
+        .auth-brand-bg {
+            transition: opacity 0.8s ease;
+        }
+
+        body[data-mode="register"] .auth-brand-bg {
+            opacity: 0.7;
+        }
+
+        @media (min-width: 1001px) {
+            .auth-form-panel {
+                margin-left: -60px;
+                padding-left: 120px;
+                clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .auth-form-panel {
+                padding: 60px 40px;
+                background: #fff;
+            }
+
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-mark {
+                display: none;
+            }
+        }
+    </style>
+  <link rel="stylesheet" href="../css/translate.css" />
+</head>
+
+<body data-mode="login">
+    <div class="auth-container">
+
+        <!-- ── LEFT PANEL (VISUAL) ── -->
+        <div class="auth-brand">
+            <div id="brandBg" class="auth-brand-bg"></div>
+            <div class="auth-brand-overlay"></div>
+            <div class="brand-mark">YUKTI</div>
+
+        </div>
+
+        <!-- ── RIGHT PANELS (FORMS) ── -->
+        <div class="auth-form-container">
+
+            <!-- PANEL: LOGIN -->
+            <div class="auth-form-panel login">
+                <div class="panel-header">
+                    <div class="logo-text">YUKTI</div>
+                    <div class="mode-toggle" role="tablist">
+                        <button type="button" class="mode-btn" data-mode="login">Login</button>
+                        <button type="button" class="mode-btn" data-mode="register">Register</button>
+                    </div>
+                    <button class="lang-switch">🇬🇧 EN</button>
+                </div>
+
+                <div class="auth-hero">
+                    <h1>Hi Farmer</h1>
+                    <p>Welcome back to your precision farming center.</p>
+                </div>
+
+                <form id="loginForm" class="auth-form">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" class="auth-input" placeholder="example@farm.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPass" class="auth-input" placeholder="••••••••" required>
+                    </div>
+
+                    <a href="#" class="forgot-pw">Forgot password ?</a>
+
+                    <button type="submit" id="loginBtn" class="login-btn">Login</button>
+                    <p class="signup-hint">Don't have an account? <a href="javascript:void(0)"
+                            onclick="setMode('register')">Sign up</a></p>
+                </form>
+            </div>
+
+            <!-- PANEL: REGISTER -->
+            <div class="auth-form-panel register">
+                <div class="panel-header">
+                    <div class="logo-text">YUKTI</div>
+                    <div class="mode-toggle" role="tablist">
+                        <button type="button" class="mode-btn" data-mode="login">Login</button>
+                        <button type="button" class="mode-btn" data-mode="register">Register</button>
+                    </div>
+                    <button class="lang-switch">🇬🇧 EN</button>
+                </div>
+
+                <div class="auth-hero">
+                    <h1>Create Account</h1>
+                    <p>Join the precision agricultural revolution.</p>
+                </div>
+
+                <form id="registerForm" class="auth-form">
+                    <div class="form-section-header">Personal Identity</div>
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" class="auth-input" placeholder="Rajan Kumar" autocomplete="name"
+                            required>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group inline">
+                            <label>Email Address</label>
+                            <input type="email" id="regEmail" class="auth-input" placeholder="you@farm.com"
+                                autocomplete="email" required>
+                        </div>
+                        <div class="input-group inline">
+                            <label>Phone Number</label>
+                            <input type="tel" id="regPhone" class="auth-input" placeholder="+91" autocomplete="tel">
+                        </div>
+                    </div>
+
+                    <div class="form-section-header">Farm & Operations</div>
+                    <div class="input-row">
+                        <div class="input-group inline">
+                            <label>Set Password</label>
+                            <input type="password" id="regPass" class="auth-input" placeholder="Min 8 chars"
+                                autocomplete="new-password" required>
+                        </div>
+                        <div class="input-group inline">
+                            <label>Professional Role</label>
+                            <select id="regRole" class="auth-input">
+                                <option value="farmer">Farmer</option>
+                                <option value="agronomist">Agronomist</option>
+                                <option value="manager">Farm Manager</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-row" style="margin-top:16px;">
+                        <div class="input-group inline">
+                            <label>State</label>
+                            <select id="regState" class="auth-input">
+                                <option value="">Select State</option>
+                                <option>Maharashtra</option>
+                                <option>Punjab</option>
+                                <option>Karnataka</option>
+                                <option>Gujarat</option>
+                            </select>
+                        </div>
+                        <div class="input-group inline">
+                            <label>Farm Size (Acres)</label>
+                            <input type="number" id="regSize" class="auth-input" placeholder="e.g. 10">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="regBtn" class="login-btn" style="margin-top: 32px;">Create
+                        Account</button>
+                    <p class="signup-hint">Already have an account? <a href="javascript:void(0)"
+                            onclick="setMode('login')">Sign in</a></p>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Global Message Overlay -->
+        <div id="authMsg" class="auth-msg"></div>
+
+    </div>
+
+    <script>
+        const $ = id => document.getElementById(id);
+        const images = {
+            login: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&q=80&w=1000',
+            register: 'https://images.unsplash.com/photo-1500382017468-9049fee74a62?auto=format&fit=crop&q=80&w=1200'
+        };
+
+        function setMode(mode) {
+            document.body.dataset.mode = mode;
+            $('brandBg').style.backgroundImage = `url('${images[mode]}')`;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+        }
+
+        function showMsg(text, type = 'error') {
+            const el = $('authMsg');
+            el.className = `auth-msg ${type}`;
+            el.innerText = text;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 4000);
+        }
+
+        // --- Auth Logic ---
+        $('loginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = $('loginEmail').value.trim();
+            const password = $('loginPass').value;
+            $('loginBtn').disabled = true;
+            $('loginBtn').innerText = 'Signing in...';
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Login failed');
+                localStorage.setItem('fm_token', data.token);
+                localStorage.setItem('fm_user', JSON.stringify(data.user));
+                window.location.replace('project.html');
+            } catch (err) {
+                showMsg(err.message);
+                $('loginBtn').disabled = false;
+                $('loginBtn').innerText = 'Login';
+            }
+        };
+
+        $('registerForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const body = {
+                full_name: $('regName').value,
+                email: $('regEmail').value,
+                phone: $('regPhone').value,
+                password: $('regPass').value,
+                role: $('regRole').value,
+                state: $('regState').value,
+                district: '',
+                farm_size_acres: parseFloat($('regSize').value) || 0,
+                experience_yrs: 0,
+                primary_crop: '',
+                soil_type: '',
+                irrigation_src: ''
+            };
+            $('regBtn').disabled = true;
+            $('regBtn').innerText = 'Joining...';
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Registration failed');
+                localStorage.setItem('fm_token', data.token);
+                localStorage.setItem('fm_user', JSON.stringify(data.user));
+                window.location.replace('project.html');
+            } catch (err) {
+                showMsg(err.message);
+                $('regBtn').disabled = false;
+                $('regBtn').innerText = 'Create Account';
+            }
+        };
+
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => setMode(btn.dataset.mode));
+        });
+
+        // Initialize background
+        setMode('login');
+    </script>
+  <script src="../scripts/translate.js"></script>
+</body>
+
+</html>
+
